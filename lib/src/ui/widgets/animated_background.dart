@@ -168,6 +168,8 @@ class _WaterBackgroundPainter extends CustomPainter {
       ..lineTo(size.width, size.height)
       ..close();
 
+    final rect = Offset.zero & size;
+
     final wavePaint = Paint()
       ..shader = LinearGradient(
         colors: [
