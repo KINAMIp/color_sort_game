@@ -39,9 +39,9 @@ class AssetPaths {
   AssetPaths._();
 
   static const String levels = 'assets/levels';
-  static const String audioPour = 'audio/pour.wav';
-  static const String audioInvalid = 'audio/correct.wav';
-  static const String audioWin = 'audio/win.mp3';
+  static const String audioPour = 'pour.wav';
+  static const String audioInvalid = 'correct.wav';
+  static const String audioWin = 'win.mp3';
 }
 
 class LevelSets {
