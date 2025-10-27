@@ -6,7 +6,7 @@ import 'src/services/audio_service.dart';
 import 'src/services/firebase_service.dart';
 import 'src/services/storage_service.dart';
 import 'src/state/app_state.dart';
-import 'src/ui/home_screen.dart';
+import 'src/ui/glass_pour/glass_pour_game_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +54,7 @@ class WaterColorSortPuzzleApp extends StatelessWidget {
                 displayColor: Colors.white,
               ),
             ),
-            home: const HomeScreen(),
+            home: const GlassPourGameScreen(),
           );
         },
       ),
