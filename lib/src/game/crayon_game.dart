@@ -2,9 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flame/components.dart';
-import 'package:flame/game.dart';
 import 'package:flame/events.dart';
-import 'package:flame/input.dart';
+import 'package:flame/game.dart';
 
 import '../data/level_model.dart';
 import '../services/audio_service.dart';
