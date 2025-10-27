@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/painting.dart';
 
 import 'color_segment.dart';
@@ -125,14 +126,13 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     final direction = destination.position.x >= position.x ? 1 : -1;
     final bend = direction > 0 ? -0.32 : 0.32;
     final controller = EffectController(
-      duration: const Duration(milliseconds: 260),
-      reverseDuration: const Duration(milliseconds: 240),
+      duration: 0.26,
+      reverseDuration: 0.24,
       curve: Curves.easeInOutCubic,
     );
     final rotateEffect = RotateEffect.by(
       bend,
       controller,
-      target: this,
       anchor: Anchor.bottomCenter,
     );
     add(rotateEffect);
