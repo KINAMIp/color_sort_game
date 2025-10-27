@@ -24,12 +24,18 @@ class HomeScreen extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         }
+        appState.audioService.enableAmbientLoop();
         return Scaffold(
           body: AnimatedBackground(
-            colors: const [Color(0xFF8EEBFF), Color(0xFF9FA8FF), Color(0xFFFFD6FF)],
-            beginAlignment: Alignment.topCenter,
-            endAlignment: Alignment.bottomCenter,
-            opacity: 0.2,
+            colors: const [
+              Color(0xFF6DD5FA),
+              Color(0xFF83EAF1),
+              Color(0xFFA6C1EE),
+              Color(0xFFFFF1F1),
+            ],
+            beginAlignment: Alignment.topLeft,
+            endAlignment: Alignment.bottomRight,
+            opacity: 0.24,
             showWaterBalloons: true,
             child: SafeArea(
               child: Padding(
@@ -62,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                'Pour shimmering watercolors into glowing glasses across 300 whimsical levels.',
+                                'Drift through liquid rainbows while you mix, swirl, and sort glowing water layers across 300 aquatic puzzles.',
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                       color: Colors.white.withOpacity(0.86),
                                       height: 1.3,
@@ -133,7 +139,9 @@ class HomeScreen extends StatelessWidget {
                       alignment: Alignment.bottomRight,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.18),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF9AE7FF), Color(0xFF9C6BFF)],
+                          ),
                           borderRadius: BorderRadius.circular(18),
                           boxShadow: [
                             BoxShadow(
@@ -145,12 +153,19 @@ class HomeScreen extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                          child: Text(
-                            'New glass shapes unlock every 10 levels!',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.water_drop_rounded, color: Colors.white),
+                              const SizedBox(width: 8),
+                              Text(
+                                'New glass shapes unlock every 10 levels!',
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

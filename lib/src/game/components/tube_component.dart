@@ -34,6 +34,8 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   double _rippleProgress = 0;
   double _sparkleTimer = 0;
   final List<_SparkleParticle> _sparkles = [];
+  final List<_BubbleParticle> _floatingBubbles = [];
+  final List<_SplashRipple> _splashRipples = [];
   static final math.Random _random = math.Random();
 
   bool get isSelected => _selected;
@@ -146,6 +148,46 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     _rippleProgress = strength.clamp(0, 1);
   }
 
+  void emitPourEffects(Color color) {
+    final layerIndex = segments.isEmpty ? 0.0 : segments.length - 0.5;
+    final startProgress = (layerIndex / capacity).clamp(0.0, 1.0);
+    for (var i = 0; i < 5; i++) {
+      _floatingBubbles.add(
+        _BubbleParticle(
+          color: color,
+          baseProgress: startProgress,
+          progress: startProgress + lerpDouble(-0.03, 0.03, _random.nextDouble())!,
+          speed: lerpDouble(0.22, 0.36, _random.nextDouble())!,
+          horizontalShift: lerpDouble(-0.18, 0.18, _random.nextDouble())!,
+          radius: lerpDouble(3, 6.5, _random.nextDouble())!,
+          lifetime: lerpDouble(0.85, 1.4, _random.nextDouble())!,
+        ),
+      );
+    }
+    _splashRipples.add(
+      _SplashRipple(
+        color: color,
+        baseProgress: startProgress,
+        lifetime: 0.6,
+      ),
+    );
+  }
+
+  Vector2 getPourMouthPosition() {
+    return Vector2(
+      position.x + size.x / 2,
+      position.y + style.topPadding,
+    );
+  }
+
+  Vector2 getPourLandingPosition({required int incomingLayers}) {
+    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final segmentHeight = availableHeight / capacity;
+    final targetIndex = segments.length + incomingLayers - 0.5;
+    final y = position.y + size.y - style.bottomPadding - targetIndex * segmentHeight;
+    return Vector2(position.x + size.x / 2, y);
+  }
+
   @override
   void update(double dt) {
     super.update(dt);
@@ -178,6 +220,23 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       sparkle.elapsed += dt;
       if (sparkle.elapsed >= sparkle.lifetime) {
         _sparkles.removeAt(i);
+      }
+    }
+
+    for (var i = _floatingBubbles.length - 1; i >= 0; i--) {
+      final bubble = _floatingBubbles[i];
+      bubble.elapsed += dt;
+      bubble.progress += dt * bubble.speed;
+      if (bubble.elapsed >= bubble.lifetime || bubble.progress >= 1.08) {
+        _floatingBubbles.removeAt(i);
+      }
+    }
+
+    for (var i = _splashRipples.length - 1; i >= 0; i--) {
+      final splash = _splashRipples[i];
+      splash.elapsed += dt;
+      if (splash.elapsed >= splash.lifetime) {
+        _splashRipples.removeAt(i);
       }
     }
   }
@@ -250,8 +309,10 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     }
     canvas.restore();
 
+    _renderFloatingBubbles(canvas, shapePath);
     _renderRipple(canvas);
     _renderSparkles(canvas);
+    _renderSplashRipples(canvas);
   }
 
   Path _buildBottlePath() {
@@ -398,17 +459,11 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   }
 
   Paint _buildSegmentPaint(Rect rect, Color color) {
-    if (style.design != TubeDesign.neon) {
-      return Paint()
-        ..style = PaintingStyle.fill
-        ..color = color;
-    }
+    final top = Color.lerp(color, Colors.white, 0.22)!;
+    final bottom = Color.lerp(color, Colors.black, 0.16)!;
     return Paint()
       ..shader = LinearGradient(
-        colors: [
-          Color.lerp(color, Colors.white, 0.18)!,
-          Color.lerp(color, Colors.black, 0.22)!,
-        ],
+        colors: [top, bottom],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(rect);
@@ -619,6 +674,51 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       ..close();
     canvas.drawPath(path, paint);
   }
+
+  void _renderFloatingBubbles(Canvas canvas, Path shapePath) {
+    if (_floatingBubbles.isEmpty) {
+      return;
+    }
+    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    canvas.save();
+    canvas.clipPath(shapePath);
+    for (final bubble in _floatingBubbles) {
+      final fade = 1 - (bubble.elapsed / bubble.lifetime).clamp(0.0, 1.0);
+      final x = size.x / 2 + bubble.horizontalShift * size.x * 0.45;
+      final y = size.y - style.bottomPadding - availableHeight * bubble.progress;
+      final radius = bubble.radius * (1 + (1 - fade) * 0.25);
+      final rect = Rect.fromCircle(center: Offset(x, y), radius: radius);
+      final paint = Paint()
+        ..shader = RadialGradient(
+          colors: [
+            Colors.white.withOpacity(0.75 * fade),
+            bubble.color.withOpacity(0.15 * fade),
+          ],
+        ).createShader(rect);
+      canvas.drawCircle(Offset(x, y), radius, paint);
+    }
+    canvas.restore();
+  }
+
+  void _renderSplashRipples(Canvas canvas) {
+    if (_splashRipples.isEmpty) {
+      return;
+    }
+    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    for (final splash in _splashRipples) {
+      final t = (splash.elapsed / splash.lifetime).clamp(0.0, 1.0);
+      final center = Offset(
+        size.x / 2,
+        size.y - style.bottomPadding - availableHeight * splash.baseProgress,
+      );
+      final radius = lerpDouble(size.x * 0.18, size.x * 0.36, t)!;
+      final paint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = lerpDouble(4, 1.2, t)!
+        ..color = splash.color.withOpacity(0.4 * (1 - t));
+      canvas.drawCircle(center, radius, paint);
+    }
+  }
 }
 
 class _SparkleParticle {
@@ -631,5 +731,39 @@ class _SparkleParticle {
   final Offset position;
   final double lifetime;
   final double baseSize;
+  double elapsed = 0;
+}
+
+class _BubbleParticle {
+  _BubbleParticle({
+    required this.color,
+    required this.baseProgress,
+    required this.progress,
+    required this.speed,
+    required this.horizontalShift,
+    required this.radius,
+    required this.lifetime,
+  });
+
+  final Color color;
+  final double baseProgress;
+  double progress;
+  final double speed;
+  final double horizontalShift;
+  final double radius;
+  final double lifetime;
+  double elapsed = 0;
+}
+
+class _SplashRipple {
+  _SplashRipple({
+    required this.color,
+    required this.baseProgress,
+    required this.lifetime,
+  });
+
+  final Color color;
+  final double baseProgress;
+  final double lifetime;
   double elapsed = 0;
 }

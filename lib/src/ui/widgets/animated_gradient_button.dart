@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../state/app_state.dart';
 
 class AnimatedGradientButton extends StatefulWidget {
   const AnimatedGradientButton({
@@ -9,6 +12,7 @@ class AnimatedGradientButton extends StatefulWidget {
     required this.colors,
     this.icon,
     this.padding = const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
+    this.textGradient,
   });
 
   final String text;
@@ -16,6 +20,7 @@ class AnimatedGradientButton extends StatefulWidget {
   final List<Color> colors;
   final IconData? icon;
   final EdgeInsets padding;
+  final Gradient? textGradient;
 
   @override
   State<AnimatedGradientButton> createState() => _AnimatedGradientButtonState();
@@ -51,14 +56,27 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
     _controller.reverse();
   }
 
+  AppState? _appState(BuildContext context) {
+    return context.mounted ? Provider.maybeOf<AppState>(context, listen: false) : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final enabled = widget.onPressed != null;
+    final gradient = LinearGradient(colors: widget.colors);
+    final textGradient = widget.textGradient ??
+        LinearGradient(
+          colors: [
+            widget.colors.first,
+            Color.lerp(widget.colors.last, Colors.white, 0.3)!,
+          ],
+        );
     return MouseRegion(
       onEnter: (_) {
         if (!enabled) {
           return;
         }
+        _appState(context)?.audioService.playButtonHover();
         setState(() => _hovering = true);
       },
       onExit: (_) {
@@ -74,6 +92,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
         onTap: enabled
             ? () {
                 HapticFeedback.lightImpact();
+                _appState(context)?.audioService.playButtonTap();
                 widget.onPressed?.call();
               }
             : null,
@@ -94,7 +113,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
           },
           child: DecoratedBox(
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: widget.colors),
+              gradient: gradient,
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
@@ -104,31 +123,87 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                 ),
               ],
             ),
-            child: Padding(
-              padding: widget.padding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (widget.icon != null) ...[
-                    Icon(widget.icon, color: Colors.white),
-                    const SizedBox(width: 12),
-                  ],
-                  Text(
-                    widget.text,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                      color: Colors.white,
-                      letterSpacing: 0.6,
-                    ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                AnimatedOpacity(
+                  opacity: _hovering ? 0.28 : 0,
+                  duration: const Duration(milliseconds: 260),
+                  child: _BubblyOverlay(colors: widget.colors),
+                ),
+                Padding(
+                  padding: widget.padding,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (widget.icon != null) ...[
+                        Icon(widget.icon, color: Colors.white),
+                        const SizedBox(width: 12),
+                      ],
+                      ShaderMask(
+                        shaderCallback: (bounds) =>
+                            textGradient.createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+                        blendMode: BlendMode.srcIn,
+                        child: Text(
+                          widget.text,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 18,
+                            color: Colors.white,
+                            letterSpacing: 0.7,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class _BubblyOverlay extends StatelessWidget {
+  const _BubblyOverlay({required this.colors});
+
+  final List<Color> colors;
+
+  @override
+  Widget build(BuildContext context) {
+    final bubbles = <Widget>[];
+    final positions = const [
+      Offset(0.2, 0.3),
+      Offset(0.45, 0.65),
+      Offset(0.7, 0.25),
+      Offset(0.86, 0.6),
+    ];
+    for (var i = 0; i < positions.length; i++) {
+      final offset = positions[i];
+      bubbles.add(
+        Positioned.fill(
+          child: FractionallySizedBox(
+            widthFactor: 0.08 + i * 0.02,
+            heightFactor: 0.08 + i * 0.02,
+            alignment: Alignment(offset.dx * 2 - 1, offset.dy * 2 - 1),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    Colors.white.withOpacity(0.85),
+                    colors.first.withOpacity(0.0),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    return Stack(children: bubbles);
   }
 }
