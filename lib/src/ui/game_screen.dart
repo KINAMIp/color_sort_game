@@ -9,6 +9,7 @@ import '../utils/constants.dart';
 import '../ui/overlays/hud_overlay.dart';
 import '../ui/overlays/level_complete.dart';
 import '../ui/overlays/pause_overlay.dart';
+import 'widgets/animated_background.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key, required this.level});
@@ -55,48 +56,66 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          GameWidget(
-            key: ValueKey(_currentLevel.id),
-            game: _game,
-            overlayBuilderMap: {
-              CrayonGame.hudOverlay: (context, game) {
-                return HudOverlay(
-                  game: game as CrayonGame,
-                  onPause: () => _game.pauseGame(),
-                );
-              },
-              CrayonGame.pauseOverlay: (context, game) {
-                return PauseOverlay(
-                  game: game as CrayonGame,
-                  onExit: () {
-                    Navigator.of(context).pop();
-                  },
-                );
-              },
-              CrayonGame.levelCompleteOverlay: (context, game) {
-                return LevelCompleteOverlay(
-                  game: game as CrayonGame,
-                  onNextLevel: _advanceToNextLevel,
-                  onExit: () {
-                    Navigator.of(context).pop();
-                  },
-                );
-              },
-            },
-          ),
-          Positioned(
-            top: 40,
-            left: 16,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.of(context).pop();
+      body: AnimatedBackground(
+        colors: const [Color(0xFF0F172A), Color(0xFF1E1B4B)],
+        darkOverlay: true,
+        child: Stack(
+          children: [
+            GameWidget(
+              key: ValueKey(_currentLevel.id),
+              game: _game,
+              overlayBuilderMap: {
+                CrayonGame.hudOverlay: (context, game) {
+                  return HudOverlay(
+                    game: game as CrayonGame,
+                    onPause: () => _game.pauseGame(),
+                  );
+                },
+                CrayonGame.pauseOverlay: (context, game) {
+                  return PauseOverlay(
+                    game: game as CrayonGame,
+                    onExit: () {
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+                CrayonGame.levelCompleteOverlay: (context, game) {
+                  return LevelCompleteOverlay(
+                    game: game as CrayonGame,
+                    onNextLevel: _advanceToNextLevel,
+                    onExit: () {
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
               },
             ),
-          ),
-        ],
+            Positioned(
+              top: 40,
+              left: 16,
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF7BAC), Color(0xFF9C6BFF)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.arrow_back_rounded, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

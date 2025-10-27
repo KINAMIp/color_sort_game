@@ -31,14 +31,28 @@ class CrayonApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final baseTheme = ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFFFF7BAC),
+              brightness: Brightness.light,
+            ),
+            scaffoldBackgroundColor: Colors.transparent,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              foregroundColor: Colors.white,
+              centerTitle: true,
+            ),
+            textTheme: GoogleFonts.fredokaTextTheme(),
           );
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Crayon',
             theme: baseTheme.copyWith(
-              textTheme: GoogleFonts.fredokaTextTheme(baseTheme.textTheme),
+              textTheme: GoogleFonts.fredokaTextTheme(baseTheme.textTheme).apply(
+                bodyColor: Colors.white,
+                displayColor: Colors.white,
+              ),
             ),
             home: const HomeScreen(),
           );
