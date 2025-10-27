@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/services.dart' show rootBundle;
@@ -38,9 +39,138 @@ class Level {
   final int hints;
 
   List<List<Color>> buildColorStacks() {
-    return tubes
-        .map((tube) => tube.map(GameColors.fromName).toList())
-        .toList(growable: false);
+    if (tubes.isEmpty) {
+      return const <List<Color>>[];
+    }
+
+    final colorPool = <String>[];
+    final emptyIndices = <int>[];
+    for (var i = 0; i < tubes.length; i++) {
+      final tube = tubes[i];
+      if (tube.isEmpty) {
+        emptyIndices.add(i);
+      } else {
+        colorPool.addAll(tube);
+      }
+    }
+
+    if (colorPool.isEmpty) {
+      return tubes
+          .map((tube) => tube.map(GameColors.fromName).toList())
+          .toList(growable: false);
+    }
+
+    final totalTubes = tubes.length;
+    final chosenEmptyIndex = emptyIndices.isNotEmpty ? emptyIndices.first : totalTubes - 1;
+    final targetLengths = List<int>.filled(totalTubes, 0);
+    final playableIndices = <int>[];
+    for (var i = 0; i < totalTubes; i++) {
+      if (i == chosenEmptyIndex) {
+        continue;
+      }
+      playableIndices.add(i);
+    }
+
+    var segmentsRemaining = colorPool.length;
+    for (final index in playableIndices) {
+      if (segmentsRemaining == 0) {
+        break;
+      }
+      targetLengths[index] = 1;
+      segmentsRemaining -= 1;
+    }
+
+    while (segmentsRemaining > 0) {
+      var distributed = false;
+      for (final index in playableIndices) {
+        if (segmentsRemaining == 0) {
+          break;
+        }
+        if (targetLengths[index] >= tubeCapacity) {
+          continue;
+        }
+        targetLengths[index] += 1;
+        segmentsRemaining -= 1;
+        distributed = true;
+      }
+      if (!distributed) {
+        break;
+      }
+    }
+
+    final random = math.Random(id.hashCode);
+    colorPool.shuffle(random);
+
+    final stacks = List<List<Color>>.generate(totalTubes, (_) => <Color>[]);
+    var cursor = 0;
+    for (var i = 0; i < totalTubes; i++) {
+      final length = targetLengths[i];
+      for (var j = 0; j < length; j++) {
+        if (cursor >= colorPool.length) {
+          break;
+        }
+        stacks[i].add(GameColors.fromName(colorPool[cursor++]));
+      }
+    }
+
+    _enforceMixedStacks(stacks, playableIndices, random);
+
+    return stacks;
+  }
+
+  void _enforceMixedStacks(
+    List<List<Color>> stacks,
+    List<int> playableIndices,
+    math.Random random,
+  ) {
+    if (playableIndices.length <= 1) {
+      return;
+    }
+
+    for (final index in playableIndices) {
+      final stack = stacks[index];
+      if (stack.length <= 1) {
+        continue;
+      }
+      final uniqueColors = stack.toSet();
+      if (uniqueColors.length > 1) {
+        continue;
+      }
+
+      final currentColor = stack.first;
+      final candidates = playableIndices
+          .where((other) =>
+              other != index &&
+              stacks[other].isNotEmpty &&
+              stacks[other].any((color) => color != currentColor))
+          .toList();
+
+      if (candidates.isEmpty) {
+        final alternative = playableIndices
+            .where((other) => other != index && stacks[other].isNotEmpty)
+            .toList();
+        if (alternative.isEmpty) {
+          continue;
+        }
+        final otherIndex = alternative[random.nextInt(alternative.length)];
+        final otherStack = stacks[otherIndex];
+        final swapPos = random.nextInt(otherStack.length);
+        final temp = stack[0];
+        stack[0] = otherStack[swapPos];
+        otherStack[swapPos] = temp;
+        continue;
+      }
+
+      final otherIndex = candidates[random.nextInt(candidates.length)];
+      final otherStack = stacks[otherIndex];
+      var swapPos = otherStack.indexWhere((color) => color != currentColor);
+      if (swapPos == -1) {
+        swapPos = 0;
+      }
+      final temp = stack[0];
+      stack[0] = otherStack[swapPos];
+      otherStack[swapPos] = temp;
+    }
   }
 
   bool isSolved(List<List<Color>> stacks) {
