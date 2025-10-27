@@ -21,15 +21,25 @@ class AudioService {
     }
     try {
       FlameAudio.audioCache.prefix = 'assets/audio/';
-      await FlameAudio.audioCache.loadAll(const [
+      final availability = <String, bool>{};
+      for (final asset in AssetPaths.allAudioAssets) {
+        availability[asset] = await _loadAudioAsset(asset);
+      }
+      final coreAssets = [
         AssetPaths.audioPour,
         AssetPaths.audioInvalid,
         AssetPaths.audioWin,
-      ]);
-      _buttonSplashAvailable = await _tryLoadOptional(AssetPaths.audioButtonSplash);
-      _confettiAvailable = await _tryLoadOptional(AssetPaths.audioConfetti);
-      _outOfMovesAvailable = await _tryLoadOptional(AssetPaths.audioOutOfMoves);
-      _ambientAvailable = await _tryLoadOptional(AssetPaths.audioAmbient);
+      ];
+      final hasCoreAssets =
+          coreAssets.every((asset) => availability[asset] ?? false);
+      if (!hasCoreAssets) {
+        _initialized = false;
+        return;
+      }
+      _buttonSplashAvailable = availability[AssetPaths.audioButtonSplash] ?? false;
+      _confettiAvailable = availability[AssetPaths.audioConfetti] ?? false;
+      _outOfMovesAvailable = availability[AssetPaths.audioOutOfMoves] ?? false;
+      _ambientAvailable = availability[AssetPaths.audioAmbient] ?? false;
       _initialized = true;
     } catch (_) {
       // Audio is optional; failures should not block the game from starting.
@@ -156,11 +166,11 @@ class AudioService {
     _ambientPlaying = false;
   }
 
-  Future<bool> _tryLoadOptional(String asset) async {
+  Future<bool> _loadAudioAsset(String asset) async {
     try {
       await FlameAudio.audioCache
           .load(asset)
-          .timeout(const Duration(seconds: 2));
+          .timeout(const Duration(seconds: 4));
       return true;
     } catch (_) {
       return false;

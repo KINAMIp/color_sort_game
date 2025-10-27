@@ -111,15 +111,16 @@ class CrayonGame extends FlameGame {
     final minHorizontalPadding = targetColumns >= 6 ? 12.0 : 24.0;
     final horizontalPadding =
         math.max(minHorizontalPadding, size.x * horizontalPaddingFactor);
-    final verticalPaddingFactor = targetRows >= 3 ? 0.08 : 0.1;
-    final minVerticalPadding = targetRows >= 3 ? 36.0 : 48.0;
-    final verticalPadding = math.max(minVerticalPadding, size.y * verticalPaddingFactor);
+    final topPaddingFactor = targetRows >= 2 ? 0.14 : 0.1;
+    final bottomPaddingFactor = targetRows >= 2 ? 0.09 : 0.07;
+    final topPadding = math.max(64.0, size.y * topPaddingFactor);
+    final bottomPadding = math.max(48.0, size.y * bottomPaddingFactor);
     final availableWidth = math.max(0.0, size.x - horizontalPadding * 2);
-    final availableHeight = math.max(0.0, size.y - verticalPadding * 2);
+    final availableHeight = math.max(0.0, size.y - topPadding - bottomPadding);
     const baseHorizontalGap = 18.0;
-    const baseVerticalGap = 28.0;
+    const baseVerticalGap = 24.0;
     const minHorizontalGap = 6.0;
-    const minVerticalGap = 12.0;
+    const minVerticalGap = 10.0;
 
     final baseWidth = tubes.first.style.width;
     final baseHeight = tubes.first.style.height;
@@ -139,6 +140,14 @@ class CrayonGame extends FlameGame {
         layoutScale = math.min(layoutScale, availableHeight / requiredHeight);
       }
     }
+    if (tubes.length <= 8 && availableWidth > 0) {
+      final gapCount = math.max(0, tubes.length - 1);
+      final spacingAllowance = math.max(0.0, availableWidth - gapCount * minHorizontalGap);
+      if (spacingAllowance > 0) {
+        final singleRowScale = (spacingAllowance / (tubes.length * baseWidth)).clamp(0.3, 1.0);
+        layoutScale = math.min(layoutScale, singleRowScale);
+      }
+    }
     layoutScale = layoutScale.clamp(0.3, 1.0);
 
     for (final tube in tubes) {
@@ -153,7 +162,9 @@ class CrayonGame extends FlameGame {
 
     var bestColumns = 1;
     var bestScore = double.negativeInfinity;
-    for (var columns = 1; columns <= maxColumns; columns++) {
+    final columnCandidates =
+        List<int>.generate(maxColumns, (index) => maxColumns - index);
+    for (final columns in columnCandidates) {
       final rows = (tubes.length / columns).ceil();
       final horizontalGap = columns > 1
           ? (availableWidth - columns * tubeWidth) / (columns - 1)
@@ -168,6 +179,12 @@ class CrayonGame extends FlameGame {
         continue;
       }
       final score = math.min(horizontalGap, verticalGap);
+      final preferSingleRow = tubes.length <= 8 && columns == tubes.length;
+      if (preferSingleRow && score.isFinite) {
+        bestColumns = columns;
+        bestScore = score;
+        break;
+      }
       if (score > bestScore) {
         bestScore = score;
         bestColumns = columns;
@@ -195,7 +212,7 @@ class CrayonGame extends FlameGame {
         ? math.max(effectiveMinVerticalGap, verticalGap)
         : 0.0;
     final usedHeight = rowCount * tubeHeight + (rowCount - 1) * clampedVerticalGap;
-    final startY = verticalPadding + math.max(0, (availableHeight - usedHeight) / 2);
+    final startY = topPadding + math.max(0, (availableHeight - usedHeight) / 2);
 
     var index = 0;
     for (var row = 0; row < rowCount; row++) {
