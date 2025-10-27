@@ -1,6 +1,8 @@
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
@@ -32,6 +34,7 @@ class CrayonGame extends FlameGame {
   int? selectedTubeIndex;
   int movesMade = 0;
   final ValueNotifier<int> movesNotifier = ValueNotifier<int>(0);
+  int _movesLimit = 0;
   bool get isLevelComplete => level.isSolved(_currentStacks);
 
   static const String pauseOverlay = 'pauseOverlay';
@@ -40,6 +43,16 @@ class CrayonGame extends FlameGame {
 
   List<List<Color>> get _currentStacks =>
       tubes.map((tube) => tube.segments.map((segment) => segment.color).toList()).toList();
+
+  bool get hasMoveLimit => _movesLimit > 0;
+
+  int get movesLimit => _movesLimit;
+
+  int get movesRemaining => hasMoveLimit ? math.max(0, _movesLimit - movesMade) : 0;
+
+  double get movesProgress => hasMoveLimit && _movesLimit > 0
+      ? movesRemaining / _movesLimit
+      : 1.0;
 
   @override
   Future<void> onLoad() async {
@@ -59,7 +72,11 @@ class CrayonGame extends FlameGame {
     overlays.remove(hudOverlay);
     onHideOverlay(hudOverlay);
     final colorStacks = level.buildColorStacks();
-    final levelNumber = int.tryParse(level.id) ?? 0;
+    final levelNumber = int.tryParse(level.id) ?? 1;
+    _movesLimit = level.movesLimit ??
+        _defaultMovesForLevel(levelNumber: levelNumber, filledTubes: colorStacks.length);
+    movesMade = 0;
+    movesNotifier.value = hasMoveLimit ? _movesLimit : 0;
     final tubeStyle = TubeVisualStyle.forLevel(levelNumber);
     for (var i = 0; i < colorStacks.length; i++) {
       final tube = TubeComponent(
@@ -99,12 +116,14 @@ class CrayonGame extends FlameGame {
     if (selectedTubeIndex == null) {
       selectedTubeIndex = tube.index;
       tube.isSelected = true;
+      HapticFeedback.selectionClick();
       return;
     }
     final previouslySelected = tubes[selectedTubeIndex!];
     if (previouslySelected.index == tube.index) {
       previouslySelected.isSelected = false;
       selectedTubeIndex = null;
+      HapticFeedback.selectionClick();
       return;
     }
     _performPour(previouslySelected, tube);
@@ -117,7 +136,11 @@ class CrayonGame extends FlameGame {
     selectedTubeIndex = null;
     if (success) {
       movesMade += 1;
-      movesNotifier.value = movesMade;
+      if (hasMoveLimit) {
+        movesNotifier.value = movesRemaining;
+      } else {
+        movesNotifier.value = movesMade;
+      }
       if (isLevelComplete) {
         audioService.playWin();
         overlays.add(levelCompleteOverlay);
@@ -155,5 +178,13 @@ class CrayonGame extends FlameGame {
   void onRemove() {
     movesNotifier.dispose();
     super.onRemove();
+  }
+
+  int _defaultMovesForLevel({required int levelNumber, required int filledTubes}) {
+    final band = ((levelNumber - 1).clamp(0, 299)) ~/ 10;
+    final base = 18 + band * 2;
+    final capacityBonus = (level.tubeCapacity - 4) * 2;
+    final densityBonus = math.max(0, filledTubes - 3);
+    return base + capacityBonus + densityBonus;
   }
 }

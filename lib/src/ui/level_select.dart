@@ -15,7 +15,11 @@ class LevelSelectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBackground(
-        colors: const [Color(0xFFFF9A9E), Color(0xFFFAD0C4)],
+        colors: const [Color(0xFF7DE8FF), Color(0xFF8FA8FF), Color(0xFFFFD4FF)],
+        beginAlignment: Alignment.topCenter,
+        endAlignment: Alignment.bottomCenter,
+        opacity: 0.2,
+        showWaterBalloons: true,
         child: SafeArea(
           child: FutureBuilder<LevelBundle>(
             future: LevelBundle.loadDefault(),
