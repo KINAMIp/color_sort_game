@@ -17,7 +17,13 @@ class GradientSoundToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        final appState = Provider.maybeOf<AppState>(context, listen: false);
+        AppState? appState;
+        try {
+          appState = Provider.of<AppState>(context, listen: false);
+        } on ProviderNotFoundException {
+          appState = null;
+        }
+
         appState?.audioService.playButtonTap();
         onChanged(!value);
       },

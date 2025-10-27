@@ -57,7 +57,15 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
   }
 
   AppState? _appState(BuildContext context) {
-    return context.mounted ? Provider.maybeOf<AppState>(context, listen: false) : null;
+    if (!context.mounted) {
+      return null;
+    }
+
+    try {
+      return Provider.of<AppState>(context, listen: false);
+    } on ProviderNotFoundException {
+      return null;
+    }
   }
 
   @override
