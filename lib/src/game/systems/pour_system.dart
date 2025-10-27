@@ -4,14 +4,18 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 
 import '../../services/audio_service.dart';
+import '../components/liquid_stream_component.dart';
 import '../components/tube_component.dart';
+import '../crayon_game.dart';
 
 class PourSystem {
   PourSystem({
     required this.audioService,
+    required this.game,
   });
 
   final AudioService audioService;
+  final CrayonGame game;
 
   bool _isPouring = false;
 
@@ -34,17 +38,33 @@ class PourSystem {
       final movable = source.consecutiveTopCount;
       final space = destination.capacity - destination.segments.length;
       final moveCount = min(movable, space);
+      final pourColor = source.topColor;
       final removed = source.takeTopSegments(moveCount);
 
       source.triggerRipple(strength: 0.4);
       audioService.playPour();
 
+      LiquidStreamComponent? stream;
+      if (pourColor != null) {
+        stream = LiquidStreamComponent(
+          color: pourColor,
+          start: source.getPourMouthPosition(),
+          end: destination.getPourLandingPosition(incomingLayers: moveCount),
+        );
+        game.add(stream);
+      }
+
       await source.animatePourTo(destination, moveCount);
+
+      if (stream != null) {
+        await stream.completed;
+      }
 
       for (final segment in removed.reversed) {
         await Future<void>.delayed(const Duration(milliseconds: 90));
         destination.addSegments([segment]);
         destination.triggerRipple(strength: 1);
+        destination.emitPourEffects(segment.color);
       }
 
       HapticFeedback.mediumImpact();

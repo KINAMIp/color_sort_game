@@ -6,7 +6,7 @@ import '../widgets/animated_gradient_button.dart';
 import '../widgets/animated_gradient_text.dart';
 import '../widgets/glass_card.dart';
 
-class LevelCompleteOverlay extends StatelessWidget {
+class LevelCompleteOverlay extends StatefulWidget {
   const LevelCompleteOverlay({
     super.key,
     required this.game,
@@ -17,6 +17,17 @@ class LevelCompleteOverlay extends StatelessWidget {
   final CrayonGame game;
   final VoidCallback onNextLevel;
   final VoidCallback onExit;
+
+  @override
+  State<LevelCompleteOverlay> createState() => _LevelCompleteOverlayState();
+}
+
+class _LevelCompleteOverlayState extends State<LevelCompleteOverlay> {
+  @override
+  void initState() {
+    super.initState();
+    widget.game.audioService.playConfetti();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +70,9 @@ class LevelCompleteOverlay extends StatelessWidget {
                   ),
                   const SizedBox(height: 18),
                   Text(
-                    game.hasMoveLimit
-                        ? 'Moves left: ${game.movesRemaining}/${game.movesLimit}'
-                        : 'Moves used: ${game.movesMade}',
+                    widget.game.hasMoveLimit
+                        ? 'Moves left: ${widget.game.movesRemaining}/${widget.game.movesLimit}'
+                        : 'Moves used: ${widget.game.movesMade}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Colors.white.withOpacity(0.85),
                         ),
@@ -91,19 +102,19 @@ class LevelCompleteOverlay extends StatelessWidget {
                   AnimatedGradientButton(
                     text: 'Next Level',
                     colors: const [Color(0xFF7CF6F3), Color(0xFF7288FF)],
-                    onPressed: onNextLevel,
+                    onPressed: widget.onNextLevel,
                   ),
                   const SizedBox(height: 16),
                   AnimatedGradientButton(
                     text: 'Replay Level',
                     colors: const [Color(0xFFFFCA7A), Color(0xFFFF7BAC)],
                     onPressed: () {
-                      game.resetLevel();
+                      widget.game.resetLevel();
                     },
                   ),
                   const SizedBox(height: 18),
                   TextButton(
-                    onPressed: onExit,
+                    onPressed: widget.onExit,
                     child: const Text(
                       'Exit to Menu',
                       style: TextStyle(

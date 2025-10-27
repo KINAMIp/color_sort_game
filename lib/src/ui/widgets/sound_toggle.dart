@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../state/app_state.dart';
 
 class GradientSoundToggle extends StatelessWidget {
   const GradientSoundToggle({
@@ -13,7 +16,11 @@ class GradientSoundToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onChanged(!value),
+      onTap: () {
+        final appState = Provider.maybeOf<AppState>(context, listen: false);
+        appState?.audioService.playButtonTap();
+        onChanged(!value);
+      },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
         height: 52,

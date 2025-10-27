@@ -40,6 +40,7 @@ class CrayonGame extends FlameGame {
   static const String pauseOverlay = 'pauseOverlay';
   static const String hudOverlay = 'hudOverlay';
   static const String levelCompleteOverlay = 'levelCompleteOverlay';
+  static const String outOfMovesOverlay = 'outOfMovesOverlay';
 
   List<List<Color>> get _currentStacks =>
       tubes.map((tube) => tube.segments.map((segment) => segment.color).toList()).toList();
@@ -59,6 +60,7 @@ class CrayonGame extends FlameGame {
     await super.onLoad();
     pourSystem = PourSystem(
       audioService: audioService,
+      game: this,
     );
     _loadLevel();
   }
@@ -71,10 +73,15 @@ class CrayonGame extends FlameGame {
     tubes.clear();
     overlays.remove(hudOverlay);
     onHideOverlay(hudOverlay);
+    overlays.remove(outOfMovesOverlay);
+    onHideOverlay(outOfMovesOverlay);
     final colorStacks = level.buildColorStacks();
     final levelNumber = int.tryParse(level.id) ?? 1;
     _movesLimit = level.movesLimit ??
-        _defaultMovesForLevel(levelNumber: levelNumber, filledTubes: colorStacks.length);
+        _calculateMoveLimit(
+          colorStacks: colorStacks,
+          levelNumber: levelNumber,
+        );
     movesMade = 0;
     movesNotifier.value = hasMoveLimit ? _movesLimit : 0;
     final tubeStyle = TubeVisualStyle.forLevel(levelNumber);
@@ -98,14 +105,28 @@ class CrayonGame extends FlameGame {
     if (tubes.isEmpty || size.x == 0) {
       return;
     }
-    final padding = 40.0;
-    final availableWidth = size.x - padding * 2;
-    final spacing = tubes.length > 1
-        ? availableWidth / (tubes.length - 1)
-        : 0;
-    for (var i = 0; i < tubes.length; i++) {
-      final tube = tubes[i];
-      tube.position = Vector2(padding + spacing * i - tube.size.x / 2, size.y * 0.6 - tube.size.y / 2);
+    final padding = 48.0;
+    final maxPerRow = math.min(8, tubes.length);
+    final rowCount = tubes.length > 8 ? 2 : 1;
+    final rowHeights = rowCount == 1
+        ? [size.y * 0.6]
+        : [size.y * 0.46, size.y * 0.78];
+    var index = 0;
+    for (var row = 0; row < rowCount; row++) {
+      final remaining = tubes.length - index;
+      final count = rowCount == 1
+          ? tubes.length
+          : row == 0
+              ? math.min(maxPerRow, (tubes.length / 2).ceil())
+              : remaining;
+      final availableWidth = size.x - padding * 2;
+      final spacing = count > 1 ? availableWidth / (count - 1) : 0;
+      for (var i = 0; i < count; i++) {
+        final tube = tubes[index++];
+        final dx = padding + spacing * i - tube.size.x / 2;
+        final dy = rowHeights[row] - tube.size.y / 2;
+        tube.position = Vector2(dx, dy);
+      }
     }
   }
 
@@ -138,6 +159,12 @@ class CrayonGame extends FlameGame {
       movesMade += 1;
       if (hasMoveLimit) {
         movesNotifier.value = movesRemaining;
+        if (movesRemaining <= 0 && !isLevelComplete) {
+          pauseEngine();
+          overlays.add(outOfMovesOverlay);
+          onShowOverlay(outOfMovesOverlay);
+          return;
+        }
       } else {
         movesNotifier.value = movesMade;
       }
@@ -171,6 +198,9 @@ class CrayonGame extends FlameGame {
   void resetLevel() {
     overlays.remove(levelCompleteOverlay);
     onHideOverlay(levelCompleteOverlay);
+    overlays.remove(outOfMovesOverlay);
+    onHideOverlay(outOfMovesOverlay);
+    resumeEngine();
     _loadLevel();
   }
 
@@ -180,12 +210,28 @@ class CrayonGame extends FlameGame {
     super.onRemove();
   }
 
-  int _defaultMovesForLevel({required int levelNumber, required int filledTubes}) {
-    final band = ((levelNumber - 1).clamp(0, 299)) ~/ 10;
-    final base = 18 + band * 2;
-    final capacityBonus = (level.tubeCapacity - 4) * 2;
-    final densityBonus = math.max(0, filledTubes - 3);
-    final completionBonus = appState.completedGames * 2;
-    return base + capacityBonus + densityBonus + completionBonus;
+  int _calculateMoveLimit({
+    required List<List<Color>> colorStacks,
+    required int levelNumber,
+  }) {
+    final segments = colorStacks.map((stack) {
+      if (stack.isEmpty) {
+        return 0;
+      }
+      var transitions = 0;
+      for (var i = 0; i < stack.length - 1; i++) {
+        if (stack[i] != stack[i + 1]) {
+          transitions += 1;
+        }
+      }
+      return math.max(1, transitions + 1);
+    }).toList();
+
+    final estimatedMoves = segments.fold<int>(0, (sum, value) => sum + value);
+    final colorVariety = colorStacks.expand((tube) => tube).toSet().length;
+    final buffer = 3 + ((levelNumber - 1) ~/ 5);
+    final progressionBonus = ((levelNumber - 1) ~/ 3);
+    final baseline = math.max(estimatedMoves + progressionBonus, colorVariety);
+    return math.max(4, baseline + buffer);
   }
 }

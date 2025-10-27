@@ -8,6 +8,7 @@ import '../state/app_state.dart';
 import '../utils/constants.dart';
 import '../ui/overlays/hud_overlay.dart';
 import '../ui/overlays/level_complete.dart';
+import '../ui/overlays/out_of_moves.dart';
 import '../ui/overlays/pause_overlay.dart';
 import 'widgets/animated_background.dart';
 
@@ -50,17 +51,24 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void dispose() {
     _game.pauseEngine();
+    context.read<AppState>().audioService.disableAmbientLoop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    context.read<AppState>().audioService.enableAmbientLoop();
     return Scaffold(
       body: AnimatedBackground(
-        colors: const [Color(0xFF0E0A2F), Color(0xFF1E1253), Color(0xFF3A1B8A)],
-        beginAlignment: Alignment.topCenter,
-        endAlignment: Alignment.bottomCenter,
-        opacity: 0.18,
+        colors: const [
+          Color(0xFF203A92),
+          Color(0xFF4169D9),
+          Color(0xFF77C8FF),
+          Color(0xFFA5E4FF),
+        ],
+        beginAlignment: Alignment.topLeft,
+        endAlignment: Alignment.bottomRight,
+        opacity: 0.22,
         darkOverlay: true,
         showWaterBalloons: true,
         child: Stack(
@@ -87,6 +95,17 @@ class _GameScreenState extends State<GameScreen> {
                   return LevelCompleteOverlay(
                     game: game as CrayonGame,
                     onNextLevel: _advanceToNextLevel,
+                    onExit: () {
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+                CrayonGame.outOfMovesOverlay: (context, game) {
+                  return OutOfMovesOverlay(
+                    game: game as CrayonGame,
+                    onRetry: () {
+                      _game.resetLevel();
+                    },
                     onExit: () {
                       Navigator.of(context).pop();
                     },
