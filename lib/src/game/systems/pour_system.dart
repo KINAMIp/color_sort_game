@@ -44,28 +44,34 @@ class PourSystem {
       source.triggerRipple(strength: 0.4);
       audioService.playPour();
 
-      LiquidStreamComponent? stream;
-      if (pourColor != null) {
-        stream = LiquidStreamComponent(
-          color: pourColor,
-          start: source.getPourMouthPosition(),
-          end: destination.getPourLandingPosition(incomingLayers: moveCount),
-        );
-        game.add(stream);
-      }
+      await source.animatePourTo(
+        destination,
+        moveCount,
+        onPour: () async {
+          LiquidStreamComponent? stream;
+          if (pourColor != null) {
+            stream = LiquidStreamComponent(
+              color: pourColor,
+              start: source.getPourMouthPosition(),
+              end: destination.getPourLandingPosition(incomingLayers: moveCount),
+            );
+            game.add(stream);
+          }
 
-      await source.animatePourTo(destination, moveCount);
+          for (final segment in removed.reversed) {
+            await Future<void>.delayed(const Duration(milliseconds: 90));
+            destination.addSegments([segment]);
+            destination.triggerRipple(strength: 1);
+            destination.emitPourEffects(segment.color);
+          }
 
-      if (stream != null) {
-        await stream.completed;
-      }
-
-      for (final segment in removed.reversed) {
-        await Future<void>.delayed(const Duration(milliseconds: 90));
-        destination.addSegments([segment]);
-        destination.triggerRipple(strength: 1);
-        destination.emitPourEffects(segment.color);
-      }
+          if (stream != null) {
+            await stream.completed;
+          } else {
+            await Future<void>.delayed(const Duration(milliseconds: 240));
+          }
+        },
+      );
 
       HapticFeedback.mediumImpact();
       return true;

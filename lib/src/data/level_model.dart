@@ -18,10 +18,17 @@ class Level {
 
   factory Level.fromJson(Map<String, dynamic> json) {
     final tubesJson = json['tubes'] as List<dynamic>?;
+    final id = json['id'] as String;
+    final tubeCapacity = json['tube_capacity'] as int;
+    final tubeCount = tubesJson?.length ?? 0;
     return Level(
-      id: json['id'] as String,
+      id: id,
       title: json['title'] as String,
-      tubeCapacity: json['tube_capacity'] as int,
+      tubeCapacity: _computeTubeCapacity(
+        baseCapacity: tubeCapacity,
+        levelNumber: int.tryParse(id) ?? 1,
+        tubeCount: tubeCount,
+      ),
       tubes: tubesJson
               ?.map((tube) => List<String>.from(tube as List<dynamic>))
               .toList() ??
@@ -37,6 +44,21 @@ class Level {
   final List<List<String>> tubes;
   final int? movesLimit;
   final int hints;
+
+  static int _computeTubeCapacity({
+    required int baseCapacity,
+    required int levelNumber,
+    required int tubeCount,
+  }) {
+    if (levelNumber <= 10) {
+      return 5;
+    }
+    final adjustedTubeCount = math.max(0, tubeCount - 6);
+    final additionalLayers = (adjustedTubeCount / 3).floor();
+    final progressiveTarget = 5 + additionalLayers;
+    final cappedTarget = progressiveTarget > 8 ? 8 : progressiveTarget;
+    return math.max(baseCapacity, cappedTarget);
+  }
 
   List<List<Color>> buildColorStacks() {
     if (tubes.isEmpty) {
