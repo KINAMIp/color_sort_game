@@ -86,18 +86,14 @@ class _GameScreenState extends State<GameScreen> {
                 CrayonGame.pauseOverlay: (context, game) {
                   return PauseOverlay(
                     game: game as CrayonGame,
-                    onExit: () {
-                      Navigator.of(context).pop();
-                    },
+                    onExit: _handleExitRequest,
                   );
                 },
                 CrayonGame.levelCompleteOverlay: (context, game) {
                   return LevelCompleteOverlay(
                     game: game as CrayonGame,
                     onNextLevel: _advanceToNextLevel,
-                    onExit: () {
-                      Navigator.of(context).pop();
-                    },
+                    onExit: _handleExitRequest,
                   );
                 },
                 CrayonGame.outOfMovesOverlay: (context, game) {
@@ -106,9 +102,7 @@ class _GameScreenState extends State<GameScreen> {
                     onRetry: () {
                       _game.resetLevel();
                     },
-                    onExit: () {
-                      Navigator.of(context).pop();
-                    },
+                    onExit: _handleExitRequest,
                   );
                 },
               },
@@ -117,7 +111,7 @@ class _GameScreenState extends State<GameScreen> {
               top: 32,
               left: 18,
               child: GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
+                onTap: _handleExitRequest,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(28),
@@ -193,5 +187,34 @@ class _GameScreenState extends State<GameScreen> {
       }
       setState(() {});
     });
+  }
+
+  Future<void> _handleExitRequest() async {
+    if (!mounted) {
+      return;
+    }
+    final shouldExit = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) {
+            return AlertDialog(
+              title: const Text('Exit the game?'),
+              content: const Text('Your current progress in this level will be lost. Do you want to exit?'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(false),
+                  child: const Text('Stay'),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(true),
+                  child: const Text('Exit'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
+    if (shouldExit && mounted) {
+      Navigator.of(context).pop();
+    }
   }
 }

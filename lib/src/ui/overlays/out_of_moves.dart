@@ -54,7 +54,7 @@ class _OutOfMovesOverlayState extends State<OutOfMovesOverlay> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   AnimatedGradientText(
-                    'Out of Moves',
+                    'Out of moves',
                     gradient: const LinearGradient(
                       colors: [Color(0xFFFF7BAC), Color(0xFF9C6BFF), Color(0xFF7CF6F3)],
                     ),
@@ -65,7 +65,7 @@ class _OutOfMovesOverlayState extends State<OutOfMovesOverlay> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'The water has settled, but you can stir the colors again to try a fresh pour!',
+                    'You have used every move available. Try the level again or exit to the menu.',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Colors.white.withOpacity(0.85),
@@ -74,16 +74,16 @@ class _OutOfMovesOverlayState extends State<OutOfMovesOverlay> {
                   ).animate().fadeIn(duration: const Duration(milliseconds: 360)),
                   const SizedBox(height: 26),
                   AnimatedGradientButton(
-                    text: 'Retry Level',
+                    text: 'Restart the level',
                     colors: const [Color(0xFF7CF6F3), Color(0xFF7288FF)],
-                    icon: Icons.refresh_rounded,
+                    icon: Icons.restart_alt_rounded,
                     onPressed: () {
                       widget.onRetry();
                     },
                   ),
                   const SizedBox(height: 16),
                   AnimatedGradientButton(
-                    text: 'Exit to Menu',
+                    text: 'Exit the game',
                     colors: const [Color(0xFFFF9A9E), Color(0xFFFF7BAC)],
                     icon: Icons.exit_to_app_rounded,
                     onPressed: widget.onExit,

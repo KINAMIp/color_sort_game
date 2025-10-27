@@ -312,7 +312,7 @@ class CrayonGame extends FlameGame {
     required List<List<Color>> colorStacks,
     required int levelNumber,
   }) {
-    final segments = colorStacks.map((stack) {
+    final estimatedMoves = colorStacks.map((stack) {
       if (stack.isEmpty) {
         return 0;
       }
@@ -322,14 +322,15 @@ class CrayonGame extends FlameGame {
           transitions += 1;
         }
       }
+      // Each transition represents a point where at least one pour is needed to
+      // separate the colors. Adding one ensures that a perfectly sorted tube
+      // still counts as a single move requirement.
       return math.max(1, transitions + 1);
-    }).toList();
+    }).fold<int>(0, (sum, value) => sum + value);
 
-    final estimatedMoves = segments.fold<int>(0, (sum, value) => sum + value);
     final colorVariety = colorStacks.expand((tube) => tube).toSet().length;
-    final buffer = 3 + ((levelNumber - 1) ~/ 5);
-    final progressionBonus = ((levelNumber - 1) ~/ 3);
-    final baseline = math.max(estimatedMoves + progressionBonus, colorVariety);
-    return math.max(4, baseline + buffer);
+    final baseRequirement = math.max(estimatedMoves, colorVariety);
+    final progressionBonus = math.max(0, levelNumber - 1);
+    return math.max(1, baseRequirement + progressionBonus);
   }
 }
