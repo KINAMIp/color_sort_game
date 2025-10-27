@@ -71,12 +71,15 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
   @override
   Widget build(BuildContext context) {
     final enabled = widget.onPressed != null;
-    final gradient = LinearGradient(colors: widget.colors);
+    final brightenedColors = widget.colors
+        .map((color) => Color.lerp(color, Colors.white, 0.2) ?? color)
+        .toList(growable: false);
+    final gradient = LinearGradient(colors: brightenedColors);
     final textGradient = widget.textGradient ??
         LinearGradient(
           colors: [
-            widget.colors.first,
-            Color.lerp(widget.colors.last, Colors.white, 0.3)!,
+            brightenedColors.first,
+            Color.lerp(brightenedColors.last, Colors.white, 0.3)!,
           ],
         );
     return MouseRegion(
@@ -125,7 +128,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
-                  color: widget.colors.last.withOpacity(0.45),
+                  color: brightenedColors.last.withOpacity(0.4),
                   blurRadius: 20,
                   offset: const Offset(0, 12),
                 ),
@@ -138,7 +141,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                   child: AnimatedOpacity(
                     opacity: _hovering ? 0.28 : 0,
                     duration: const Duration(milliseconds: 260),
-                    child: _BubblyOverlay(colors: widget.colors),
+                    child: _BubblyOverlay(colors: brightenedColors),
                   ),
                 ),
                 Padding(
@@ -148,7 +151,10 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (widget.icon != null) ...[
-                        Icon(widget.icon, color: Colors.white),
+                        Icon(
+                          widget.icon,
+                          color: Color.lerp(Colors.white, brightenedColors.last, 0.1) ?? Colors.white,
+                        ),
                         const SizedBox(width: 12),
                       ],
                       ShaderMask(

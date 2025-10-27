@@ -102,6 +102,16 @@ class AssetPaths {
   static const String audioConfetti = 'confetti_pop.wav';
   static const String audioOutOfMoves = 'out_of_moves.wav';
   static const String audioAmbient = 'ambient_water.wav';
+
+  static const List<String> allAudioAssets = [
+    audioPour,
+    audioInvalid,
+    audioWin,
+    audioButtonSplash,
+    audioConfetti,
+    audioOutOfMoves,
+    audioAmbient,
+  ];
 }
 
 class LevelSets {
