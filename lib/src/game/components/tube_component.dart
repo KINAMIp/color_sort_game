@@ -68,8 +68,6 @@ class TubeComponent extends PositionComponent with TapCallbacks {
 
   double get _bottomPadding => style.bottomPadding * _heightScale;
 
-  double get _segmentGap => style.segmentGap * _heightScale;
-
   double get _availableHeight => size.y - _topPadding - _bottomPadding;
 
   bool get isEmpty => segments.isEmpty;
@@ -315,23 +313,31 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     canvas.clipPath(shapePath);
     final availableHeight = _availableHeight;
     final segmentHeight = availableHeight / capacity;
+    _SurfaceSegment? previousSurface;
     for (var i = 0; i < segments.length; i++) {
       final segment = segments[i];
-      final progress = capacity <= 1 ? 0.0 : i / (capacity - 1);
-      final inset = _horizontalInsetForProgress(progress);
-      final rect = Rect.fromLTWH(
-        inset,
-        size.y - _bottomPadding - (i + 1) * segmentHeight + _segmentGap / 2,
-        size.x - inset * 2,
-        segmentHeight - _segmentGap,
+      final bottomY = previousSurface?.left.dy ??
+          (size.y - _bottomPadding - segmentHeight * i);
+      final topY = bottomY - segmentHeight;
+      final bottomProgress = _progressForY(bottomY);
+      final topProgress = _progressForY(topY);
+      final bottomInset = _horizontalInsetForProgress(bottomProgress);
+      final topInset = _horizontalInsetForProgress(topProgress);
+      final bottomSurface =
+          previousSurface ?? _buildBaseSurface(bottomY, bottomInset);
+      final topSurface = _buildLiquidSurface(
+        y: topY,
+        inset: topInset,
+        height: segmentHeight,
+        index: i,
+        isTopVisible: i == segments.length - 1,
       );
-      final paint = _buildSegmentPaint(rect, segment.color);
-      final borderRadius = Radius.circular(_segmentRadiusForProgress(progress));
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(rect, borderRadius),
-        paint,
-      );
-      _renderSegmentHighlights(canvas, rect, borderRadius);
+      final path = _buildLiquidSegmentPath(bottomSurface, topSurface);
+      final bounds = path.getBounds();
+      final paint = _buildSegmentPaint(bounds, segment.color);
+      canvas.drawPath(path, paint);
+      _renderSegmentHighlights(canvas, path, bounds);
+      previousSurface = topSurface;
     }
     canvas.restore();
 
@@ -450,20 +456,85 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     }
   }
 
-  double _segmentRadiusForProgress(double progress) {
-    switch (style.design) {
-      case TubeDesign.classic:
-        return 12;
-      case TubeDesign.slender:
-        return 11 - 3 * progress;
-      case TubeDesign.potion:
-        final delta = (progress - 0.5).abs();
-        return 13 - 4 * delta;
-      case TubeDesign.royal:
-        return 14 - 5 * progress;
-      case TubeDesign.neon:
-        return 16;
-    }
+  double _progressForY(double y) {
+    final base = size.y - _bottomPadding;
+    final progress = (base - y) / _availableHeight;
+    return progress.clamp(0.0, 1.0) as double;
+  }
+
+  Path _buildLiquidSegmentPath(
+    _SurfaceSegment bottom,
+    _SurfaceSegment top,
+  ) {
+    final path = Path()
+      ..moveTo(bottom.left.dx, bottom.left.dy)
+      ..cubicTo(
+        bottom.controlLeft.dx,
+        bottom.controlLeft.dy,
+        bottom.controlRight.dx,
+        bottom.controlRight.dy,
+        bottom.right.dx,
+        bottom.right.dy,
+      )
+      ..lineTo(top.right.dx, top.right.dy)
+      ..cubicTo(
+        top.controlRight.dx,
+        top.controlRight.dy,
+        top.controlLeft.dx,
+        top.controlLeft.dy,
+        top.left.dx,
+        top.left.dy,
+      )
+      ..close();
+    return path;
+  }
+
+  _SurfaceSegment _buildBaseSurface(double y, double inset) {
+    final left = Offset(inset, y);
+    final right = Offset(size.x - inset, y);
+    final width = math.max(right.dx - left.dx, 1.0);
+    final curveDepth = math.min(size.y * 0.03, width * 0.12);
+    return _SurfaceSegment(
+      left: left,
+      right: right,
+      controlLeft: Offset(left.dx + width * 0.28, y + curveDepth),
+      controlRight: Offset(right.dx - width * 0.28, y + curveDepth),
+    );
+  }
+
+  _SurfaceSegment _buildLiquidSurface({
+    required double y,
+    required double inset,
+    required double height,
+    required int index,
+    required bool isTopVisible,
+  }) {
+    final left = Offset(inset, y);
+    final right = Offset(size.x - inset, y);
+    final width = math.max(right.dx - left.dx, 1.0);
+    final minAmplitude = height * 0.18;
+    final maxAmplitude = height * 0.78;
+    final baseAmplitude = height * (isTopVisible ? 0.52 : 0.36);
+    final amplitude = math.min(math.max(baseAmplitude, minAmplitude), maxAmplitude);
+    final undulation = math.sin(index * 1.24 + _rippleProgress * math.pi * 0.45);
+    final crestShift = (isTopVisible
+            ? (_rippleProgress - 0.5) * 0.6
+            : undulation * 0.35) *
+        width * 0.12;
+    final controlYOffset = amplitude * (0.72 + 0.1 * math.cos(index * 1.6));
+    final secondaryYOffset = amplitude * (0.68 + 0.08 * math.sin(index * 1.1));
+    return _SurfaceSegment(
+      left: left,
+      right: right,
+      controlLeft: Offset(
+        left.dx + width * 0.28 + crestShift * 0.2,
+        y - controlYOffset,
+      ),
+      controlRight: Offset(
+        right.dx - width * 0.28 + crestShift * 0.2,
+        y - secondaryYOffset,
+      ),
+    );
   }
 
   Paint _buildFillPaint() {
@@ -495,15 +566,15 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       ).createShader(rect);
   }
 
-  void _renderSegmentHighlights(Canvas canvas, Rect rect, Radius radius) {
+  void _renderSegmentHighlights(Canvas canvas, Path path, Rect bounds) {
     if (style.design != TubeDesign.neon) {
       return;
     }
     final highlightRect = Rect.fromLTWH(
-      rect.left + rect.width * 0.64,
-      rect.top + rect.height * 0.08,
-      rect.width * 0.24,
-      rect.height * 0.82,
+      bounds.left + bounds.width * 0.58,
+      bounds.top + bounds.height * 0.1,
+      bounds.width * 0.26,
+      bounds.height * 0.78,
     );
     final highlightPaint = Paint()
       ..shader = LinearGradient(
@@ -514,10 +585,13 @@ class TubeComponent extends PositionComponent with TapCallbacks {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(highlightRect);
+    canvas.save();
+    canvas.clipPath(path);
     canvas.drawRRect(
-      RRect.fromRectAndRadius(highlightRect, Radius.circular(radius.x / 1.6)),
+      RRect.fromRectAndRadius(highlightRect, Radius.circular(bounds.width * 0.18)),
       highlightPaint,
     );
+    canvas.restore();
   }
 
   void _renderNeonGlassHighlights(Canvas canvas, Path shapePath) {
@@ -745,6 +819,20 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       canvas.drawCircle(center, radius, paint);
     }
   }
+}
+
+class _SurfaceSegment {
+  _SurfaceSegment({
+    required this.left,
+    required this.right,
+    required this.controlLeft,
+    required this.controlRight,
+  });
+
+  final Offset left;
+  final Offset right;
+  final Offset controlLeft;
+  final Offset controlRight;
 }
 
 class _SparkleParticle {
