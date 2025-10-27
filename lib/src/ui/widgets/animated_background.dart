@@ -144,12 +144,12 @@ class _WaterBackgroundPainter extends CustomPainter {
       canvas.drawRect(rect, overlay);
     }
 
-    _drawLiquidWave(canvas, size);
+    _drawLiquidWave(canvas, size, rect);
     _drawBubbles(canvas, size);
     _drawBalloons(canvas, size);
   }
 
-  void _drawLiquidWave(Canvas canvas, Size size) {
+  void _drawLiquidWave(Canvas canvas, Size size, Rect rect) {
     final waveHeight = size.height * 0.18;
     final baseY = size.height * 0.82;
     final waveProgress = progress * 2 * math.pi;
@@ -168,7 +168,6 @@ class _WaterBackgroundPainter extends CustomPainter {
       ..lineTo(size.width, size.height)
       ..close();
 
-    final rect = Offset.zero & size;
     final wavePaint = Paint()
       ..shader = LinearGradient(
         colors: [
