@@ -10,12 +10,17 @@ class AudioService {
     if (_initialized) {
       return;
     }
-    await FlameAudio.audioCache.loadAll(const [
-      AssetPaths.audioPour,
-      AssetPaths.audioInvalid,
-      AssetPaths.audioWin,
-    ]);
-    _initialized = true;
+    try {
+      await FlameAudio.audioCache.loadAll(const [
+        AssetPaths.audioPour,
+        AssetPaths.audioInvalid,
+        AssetPaths.audioWin,
+      ]);
+      _initialized = true;
+    } catch (_) {
+      // Audio is optional; failures should not block the game from starting.
+      _initialized = false;
+    }
   }
 
   void setMuted(bool value) {
