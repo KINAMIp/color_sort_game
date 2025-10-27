@@ -1,10 +1,11 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 
 import 'color_segment.dart';
 
-class TubeComponent extends PositionComponent {
+class TubeComponent extends PositionComponent with TapCallbacks {
   TubeComponent({
     required this.index,
     required this.capacity,
@@ -98,6 +99,12 @@ class TubeComponent extends PositionComponent {
 
   void handleTap() {
     onTapped?.call(this);
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    super.onTapDown(event);
+    handleTap();
   }
 
   @override
