@@ -1,0 +1,55 @@
+{
+  "id": "071",
+  "title": "Vivid Stream 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "yellow"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "lavender"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

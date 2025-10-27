@@ -1,0 +1,77 @@
+{
+  "id": "117",
+  "title": "Tricky Twist 14",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "red",
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "yellow"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "magenta"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

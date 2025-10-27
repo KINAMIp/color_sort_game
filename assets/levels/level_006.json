@@ -1,28 +1,31 @@
 {
   "id": "006",
-  "title": "Level 6",
+  "title": "Easy Flow 2",
   "tube_capacity": 4,
   "tubes": [
     [
-      "red",
-      "red",
-      "blue",
-      "blue"
-    ],
-    [
-      "green",
       "purple",
-      "green",
+      "purple",
       "purple"
     ],
     [
-      "yellow",
-      "orange",
-      "yellow",
-      "orange"
+      "pink"
     ],
-    []
+    [
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "purple"
+    ]
   ],
   "moves_limit": null,
-  "hints": 2
+  "hints": 5
 }

@@ -1,0 +1,43 @@
+{
+  "id": "052",
+  "title": "Tricky Twist 1",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "green"
+    ],
+    [
+      "lime"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

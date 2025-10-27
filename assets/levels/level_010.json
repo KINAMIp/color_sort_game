@@ -1,28 +1,31 @@
 {
   "id": "010",
-  "title": "Level 10",
+  "title": "Bright Breeze 2",
   "tube_capacity": 4,
   "tubes": [
     [
-      "red",
-      "red",
-      "blue",
-      "blue"
+      "navy",
+      "navy",
+      "navy"
     ],
     [
-      "green",
-      "purple",
-      "green",
-      "purple"
+      "pink"
     ],
     [
-      "yellow",
-      "orange",
-      "yellow",
-      "orange"
+      "pink",
+      "pink",
+      "pink"
     ],
-    []
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "navy"
+    ]
   ],
   "moves_limit": null,
-  "hints": 2
+  "hints": 5
 }

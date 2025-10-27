@@ -1,0 +1,49 @@
+{
+  "id": "034",
+  "title": "Soft Splash 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "turquoise"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

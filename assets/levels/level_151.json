@@ -1,0 +1,91 @@
+{
+  "id": "151",
+  "title": "Brain Brew 7",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "red"
+    ],
+    [],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

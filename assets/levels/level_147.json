@@ -1,0 +1,84 @@
+{
+  "id": "147",
+  "title": "Puzzle Pulse 6",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [],
+    [
+      "cyan"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

@@ -1,0 +1,37 @@
+{
+  "id": "020",
+  "title": "Bright Breeze 4",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "peach"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "navy"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

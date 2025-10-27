@@ -1,0 +1,49 @@
+{
+  "id": "040",
+  "title": "Bright Breeze 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "purple"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "green"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

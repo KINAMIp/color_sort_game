@@ -1,0 +1,43 @@
+{
+  "id": "028",
+  "title": "Calm Cascade 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "red"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "teal"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

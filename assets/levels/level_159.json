@@ -1,0 +1,91 @@
+{
+  "id": "159",
+  "title": "Mind Mixer 8",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "green",
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "navy"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

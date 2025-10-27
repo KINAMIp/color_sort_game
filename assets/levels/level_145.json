@@ -1,0 +1,84 @@
+{
+  "id": "145",
+  "title": "Prism Dash 5",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "maroon"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "orange"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

@@ -1,0 +1,55 @@
+{
+  "id": "073",
+  "title": "Color Sprint 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "pink"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

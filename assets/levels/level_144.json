@@ -1,0 +1,84 @@
+{
+  "id": "144",
+  "title": "Mind Mixer 5",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "green",
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "magenta"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

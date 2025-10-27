@@ -1,0 +1,67 @@
+{
+  "id": "090",
+  "title": "Tempo Pour 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "magenta"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

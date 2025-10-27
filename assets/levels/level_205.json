@@ -1,0 +1,86 @@
+{
+  "id": "205",
+  "title": "Master Cascade 1",
+  "tube_capacity": 6,
+  "tubes": [
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "cyan"
+    ],
+    [],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 2
+}

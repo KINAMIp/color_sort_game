@@ -1,0 +1,61 @@
+{
+  "id": "080",
+  "title": "Tempo Pour 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "navy"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

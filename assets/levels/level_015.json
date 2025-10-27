@@ -1,0 +1,37 @@
+{
+  "id": "015",
+  "title": "Bright Breeze 3",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "pink"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

@@ -1,0 +1,91 @@
+{
+  "id": "152",
+  "title": "Puzzle Pulse 7",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "purple"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

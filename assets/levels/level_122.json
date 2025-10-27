@@ -1,0 +1,63 @@
+{
+  "id": "122",
+  "title": "Puzzle Pulse 1",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "lavender"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "orange"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

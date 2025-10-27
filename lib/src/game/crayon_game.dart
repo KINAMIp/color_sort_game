@@ -9,6 +9,7 @@ import '../data/level_model.dart';
 import '../services/audio_service.dart';
 import '../state/app_state.dart';
 import 'components/tube_component.dart';
+import 'components/tube_style.dart';
 import 'systems/pour_system.dart';
 
 class CrayonGame extends FlameGame {
@@ -58,11 +59,14 @@ class CrayonGame extends FlameGame {
     overlays.remove(hudOverlay);
     onHideOverlay(hudOverlay);
     final colorStacks = level.buildColorStacks();
+    final levelNumber = int.tryParse(level.id) ?? 0;
+    final tubeStyle = TubeVisualStyle.forLevel(levelNumber);
     for (var i = 0; i < colorStacks.length; i++) {
       final tube = TubeComponent(
         index: i,
         capacity: level.tubeCapacity,
         initialColors: colorStacks[i],
+        style: tubeStyle,
         onTapped: _handleTubeTap,
       );
       tubes.add(tube);

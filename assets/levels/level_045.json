@@ -1,0 +1,49 @@
+{
+  "id": "045",
+  "title": "Bright Breeze 9",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "turquoise"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

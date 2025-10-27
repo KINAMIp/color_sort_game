@@ -10,11 +10,11 @@ import 'src/ui/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const CrayonApp());
+  runApp(const WaterColorSortPuzzleApp());
 }
 
-class CrayonApp extends StatelessWidget {
-  const CrayonApp({super.key});
+class WaterColorSortPuzzleApp extends StatelessWidget {
+  const WaterColorSortPuzzleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class CrayonApp extends StatelessWidget {
           );
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Crayon',
+            title: 'Water Color Sort Puzzle',
             theme: baseTheme.copyWith(
               textTheme: GoogleFonts.fredokaTextTheme(baseTheme.textTheme).apply(
                 bodyColor: Colors.white,

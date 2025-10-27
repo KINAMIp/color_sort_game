@@ -1,0 +1,43 @@
+{
+  "id": "025",
+  "title": "Bright Breeze 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "orange"
+    ],
+    [
+      "brown"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

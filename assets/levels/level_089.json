@@ -1,0 +1,67 @@
+{
+  "id": "089",
+  "title": "Neon Ripple 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "purple"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

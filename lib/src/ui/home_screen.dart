@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AnimatedGradientText(
-                                'Crayon',
+                                'Water Color Sort Puzzle',
                                 gradient: const LinearGradient(
                                   colors: [
                                     Color(0xFFFF7BAC),
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Welcome back!',
+                                '300 splashy levels await!',
                                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                       color: Colors.white.withOpacity(0.85),
                                       shadows: const [
@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        'Let\'s pour some color magic!',
+                        'Unlock fresh bottle styles as you climb!',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: Colors.white.withOpacity(0.8),
                             ),

@@ -1,0 +1,49 @@
+{
+  "id": "048",
+  "title": "Calm Cascade 10",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "purple"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "green"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

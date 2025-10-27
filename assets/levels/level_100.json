@@ -1,0 +1,77 @@
+{
+  "id": "100",
+  "title": "Tempo Pour 10",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "green",
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "lavender"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

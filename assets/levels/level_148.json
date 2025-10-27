@@ -1,0 +1,84 @@
+{
+  "id": "148",
+  "title": "Focus Flow 6",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

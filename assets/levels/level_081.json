@@ -1,0 +1,61 @@
+{
+  "id": "081",
+  "title": "Vivid Stream 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

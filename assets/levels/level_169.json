@@ -1,0 +1,91 @@
+{
+  "id": "169",
+  "title": "Mind Mixer 10",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "red"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "purple"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

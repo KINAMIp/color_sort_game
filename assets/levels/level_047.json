@@ -1,0 +1,49 @@
+{
+  "id": "047",
+  "title": "Gentle Pour 10",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

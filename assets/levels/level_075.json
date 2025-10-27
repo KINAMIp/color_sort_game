@@ -1,0 +1,61 @@
+{
+  "id": "075",
+  "title": "Tempo Pour 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "red"
+    ],
+    [
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

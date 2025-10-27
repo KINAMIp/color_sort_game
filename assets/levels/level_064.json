@@ -1,0 +1,49 @@
+{
+  "id": "064",
+  "title": "Neon Ripple 3",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "blue"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "yellow"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

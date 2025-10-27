@@ -1,0 +1,84 @@
+{
+  "id": "142",
+  "title": "Puzzle Pulse 5",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "green"
+    ],
+    [
+      "red"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

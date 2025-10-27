@@ -1,0 +1,61 @@
+{
+  "id": "078",
+  "title": "Color Sprint 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "red"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

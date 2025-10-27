@@ -1,0 +1,49 @@
+{
+  "id": "033",
+  "title": "Calm Cascade 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "indigo"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

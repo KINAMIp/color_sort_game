@@ -1,0 +1,63 @@
+{
+  "id": "124",
+  "title": "Mind Mixer 1",
+  "tube_capacity": 5,
+  "tubes": [
+    [],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "coral"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

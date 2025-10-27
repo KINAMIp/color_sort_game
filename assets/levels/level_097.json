@@ -1,0 +1,77 @@
+{
+  "id": "097",
+  "title": "Tricky Twist 10",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "pink"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    []
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

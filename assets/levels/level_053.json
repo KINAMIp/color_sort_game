@@ -1,0 +1,43 @@
+{
+  "id": "053",
+  "title": "Color Sprint 1",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

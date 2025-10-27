@@ -1,0 +1,61 @@
+{
+  "id": "079",
+  "title": "Neon Ripple 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "pink"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

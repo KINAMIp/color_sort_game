@@ -1,0 +1,49 @@
+{
+  "id": "059",
+  "title": "Neon Ripple 2",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "indigo"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

@@ -1,0 +1,43 @@
+{
+  "id": "058",
+  "title": "Color Sprint 2",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "coral"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "green"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

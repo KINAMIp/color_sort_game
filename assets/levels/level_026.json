@@ -1,0 +1,43 @@
+{
+  "id": "026",
+  "title": "Easy Flow 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "pink"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "lime"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

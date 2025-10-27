@@ -1,0 +1,49 @@
+{
+  "id": "063",
+  "title": "Color Sprint 3",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lavender"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

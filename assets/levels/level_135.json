@@ -1,0 +1,77 @@
+{
+  "id": "135",
+  "title": "Prism Dash 3",
+  "tube_capacity": 5,
+  "tubes": [
+    [],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "maroon"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "orange"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

@@ -1,6 +1,6 @@
 {
-    "name": "color_sort_game",
-    "short_name": "color_sort_game",
+    "name": "Water Color Sort Puzzle",
+    "short_name": "Water Sort",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

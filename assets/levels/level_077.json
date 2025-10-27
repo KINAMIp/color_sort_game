@@ -1,0 +1,61 @@
+{
+  "id": "077",
+  "title": "Tricky Twist 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "brown"
+    ],
+    [
+      "yellow"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

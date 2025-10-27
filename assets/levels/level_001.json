@@ -1,13 +1,31 @@
 {
   "id": "001",
-  "title": "Getting Started",
+  "title": "Easy Flow 1",
   "tube_capacity": 4,
   "tubes": [
-    ["red", "blue", "red", "blue"],
-    ["green", "green", "yellow", "yellow"],
-    ["purple", "purple", "orange", "orange"],
-    []
+    [
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "purple"
+    ],
+    [
+      "lime"
+    ]
   ],
   "moves_limit": null,
-  "hints": 3
+  "hints": 5
 }

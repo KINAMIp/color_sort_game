@@ -1,0 +1,49 @@
+{
+  "id": "060",
+  "title": "Tempo Pour 2",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "lavender"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "brown"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

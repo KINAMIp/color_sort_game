@@ -1,0 +1,61 @@
+{
+  "id": "076",
+  "title": "Vivid Stream 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "navy"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "yellow"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

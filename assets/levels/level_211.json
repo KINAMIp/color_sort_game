@@ -1,0 +1,94 @@
+{
+  "id": "211",
+  "title": "Legendary Pour 3",
+  "tube_capacity": 6,
+  "tubes": [
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "lavender"
+    ],
+    [
+      "maroon"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 2
+}

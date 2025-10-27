@@ -1,0 +1,55 @@
+{
+  "id": "068",
+  "title": "Color Sprint 4",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "turquoise"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "lime"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

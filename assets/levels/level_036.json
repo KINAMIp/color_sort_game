@@ -1,0 +1,49 @@
+{
+  "id": "036",
+  "title": "Easy Flow 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "green"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "indigo"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

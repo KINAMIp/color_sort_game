@@ -1,0 +1,67 @@
+{
+  "id": "086",
+  "title": "Vivid Stream 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "indigo"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

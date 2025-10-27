@@ -1,0 +1,86 @@
+{
+  "id": "201",
+  "title": "Legendary Pour 1",
+  "tube_capacity": 6,
+  "tubes": [
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 2
+}

@@ -1,23 +1,27 @@
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 
 import 'color_segment.dart';
+import 'tube_style.dart';
 
 class TubeComponent extends PositionComponent with TapCallbacks {
   TubeComponent({
     required this.index,
     required this.capacity,
     required List<Color> initialColors,
+    required this.style,
     this.onTapped,
     Vector2? position,
     Vector2? size,
   })  : segments = initialColors.map(ColorSegment.new).toList(),
-        super(position: position, size: size ?? Vector2(80, 200));
+        super(position: position, size: size ?? Vector2(style.width, style.height));
 
   final int index;
   final int capacity;
+  final TubeVisualStyle style;
   final List<ColorSegment> segments;
   final void Function(TubeComponent component)? onTapped;
 
@@ -110,48 +114,164 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    final rect = Rect.fromLTWH(0, 0, size.x, size.y);
+    final shapePath = _buildBottlePath();
     final borderPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4
-      ..color = _selected ? const Color(0xFF42A5F5) : const Color(0xFF616161);
+      ..strokeWidth = style.strokeWidth
+      ..color = _selected ? style.selectionColor : style.borderColor;
     final fillPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0
-      ..color = const Color(0xFFEEEEEE);
+      ..style = PaintingStyle.fill
+      ..color = style.innerColor;
 
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rect, const Radius.circular(24)),
-      borderPaint,
-    );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rect.deflate(2), const Radius.circular(24)),
-      fillPaint,
-    );
+    canvas.drawPath(shapePath, fillPaint);
+    canvas.drawPath(shapePath, borderPaint);
 
     if (segments.isEmpty) {
       return;
     }
 
-    final segmentHeight = (size.y - 16) / capacity;
-    final segmentWidth = size.x - 16;
-    final baseY = size.y - 8;
+    canvas.save();
+    canvas.clipPath(shapePath);
+    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final segmentHeight = availableHeight / capacity;
     for (var i = 0; i < segments.length; i++) {
       final segment = segments[i];
+      final progress = capacity <= 1 ? 0.0 : i / (capacity - 1);
+      final inset = _horizontalInsetForProgress(progress);
+      final rect = Rect.fromLTWH(
+        inset,
+        size.y - style.bottomPadding - (i + 1) * segmentHeight + style.segmentGap / 2,
+        size.x - inset * 2,
+        segmentHeight - style.segmentGap,
+      );
       final paint = Paint()
         ..style = PaintingStyle.fill
         ..color = segment.color;
-      final top = baseY - (i + 1) * segmentHeight;
-      final rect = Rect.fromLTWH(
-        (size.x - segmentWidth) / 2,
-        top,
-        segmentWidth,
-        segmentHeight - 4,
-      );
+      final borderRadius = Radius.circular(_segmentRadiusForProgress(progress));
       canvas.drawRRect(
-        RRect.fromRectAndRadius(rect, const Radius.circular(12)),
+        RRect.fromRectAndRadius(rect, borderRadius),
         paint,
       );
+    }
+    canvas.restore();
+  }
+
+  Path _buildBottlePath() {
+    final rect = Rect.fromLTWH(0, 0, size.x, size.y);
+    switch (style.design) {
+      case TubeDesign.classic:
+        return Path()
+          ..addRRect(RRect.fromRectAndRadius(rect, const Radius.circular(24)));
+      case TubeDesign.slender:
+        return _buildCurvedBottlePath(
+          neckWidthFactor: 0.42,
+          shoulderWidthFactor: 0.7,
+          bellyWidthFactor: 0.82,
+          neckHeightFactor: 0.18,
+          shoulderHeightFactor: 0.58,
+          baseCurveFactor: 0.08,
+        );
+      case TubeDesign.potion:
+        return _buildCurvedBottlePath(
+          neckWidthFactor: 0.32,
+          shoulderWidthFactor: 0.78,
+          bellyWidthFactor: 0.92,
+          neckHeightFactor: 0.2,
+          shoulderHeightFactor: 0.48,
+          baseCurveFactor: 0.05,
+        );
+      case TubeDesign.royal:
+        return _buildCurvedBottlePath(
+          neckWidthFactor: 0.5,
+          shoulderWidthFactor: 0.9,
+          bellyWidthFactor: 0.88,
+          neckHeightFactor: 0.16,
+          shoulderHeightFactor: 0.44,
+          baseCurveFactor: 0.07,
+        );
+    }
+  }
+
+  Path _buildCurvedBottlePath({
+    required double neckWidthFactor,
+    required double shoulderWidthFactor,
+    required double bellyWidthFactor,
+    required double neckHeightFactor,
+    required double shoulderHeightFactor,
+    required double baseCurveFactor,
+  }) {
+    final w = size.x;
+    final h = size.y;
+    final neckWidth = w * neckWidthFactor;
+    final shoulderWidth = w * shoulderWidthFactor;
+    final bellyWidth = w * bellyWidthFactor;
+    final neckHeight = h * neckHeightFactor;
+    final shoulderHeight = h * shoulderHeightFactor;
+    final baseCurveHeight = h * baseCurveFactor;
+
+    final path = Path();
+    path.moveTo((w - neckWidth) / 2, 0);
+    path.lineTo((w + neckWidth) / 2, 0);
+    path.cubicTo(
+      (w + neckWidth) / 2,
+      neckHeight * 0.4,
+      (w + shoulderWidth) / 2,
+      neckHeight + (shoulderHeight - neckHeight) * 0.35,
+      (w + shoulderWidth) / 2,
+      shoulderHeight,
+    );
+    path.cubicTo(
+      (w + bellyWidth) / 2,
+      h - baseCurveHeight,
+      w * 0.5 + bellyWidth * 0.1,
+      h,
+      w * 0.5,
+      h,
+    );
+    path.cubicTo(
+      w * 0.5 - bellyWidth * 0.1,
+      h,
+      (w - bellyWidth) / 2,
+      h - baseCurveHeight,
+      (w - shoulderWidth) / 2,
+      shoulderHeight,
+    );
+    path.cubicTo(
+      (w - shoulderWidth) / 2,
+      neckHeight + (shoulderHeight - neckHeight) * 0.35,
+      (w - neckWidth) / 2,
+      neckHeight * 0.4,
+      (w - neckWidth) / 2,
+      0,
+    );
+    path.close();
+    return path;
+  }
+
+  double _horizontalInsetForProgress(double progress) {
+    switch (style.design) {
+      case TubeDesign.classic:
+        return size.x * 0.12;
+      case TubeDesign.slender:
+        return size.x * (0.1 + 0.12 * progress);
+      case TubeDesign.potion:
+        return size.x * (0.18 - 0.08 * math.sin(progress * math.pi));
+      case TubeDesign.royal:
+        return size.x * (0.14 + 0.06 * math.cos(progress * math.pi));
+    }
+  }
+
+  double _segmentRadiusForProgress(double progress) {
+    switch (style.design) {
+      case TubeDesign.classic:
+        return 12;
+      case TubeDesign.slender:
+        return 11 - 3 * progress;
+      case TubeDesign.potion:
+        final delta = (progress - 0.5).abs();
+        return 13 - 4 * delta;
+      case TubeDesign.royal:
+        return 14 - 5 * progress;
     }
   }
 }

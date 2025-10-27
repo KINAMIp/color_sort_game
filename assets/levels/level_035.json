@@ -1,0 +1,49 @@
+{
+  "id": "035",
+  "title": "Bright Breeze 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "maroon"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

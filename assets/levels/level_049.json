@@ -1,0 +1,49 @@
+{
+  "id": "049",
+  "title": "Soft Splash 10",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "lavender"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

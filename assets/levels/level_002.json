@@ -1,28 +1,31 @@
 {
   "id": "002",
-  "title": "Level 2",
+  "title": "Gentle Pour 1",
   "tube_capacity": 4,
   "tubes": [
     [
-      "red",
-      "red",
-      "blue",
-      "blue"
+      "turquoise"
     ],
     [
-      "green",
-      "purple",
-      "green",
-      "purple"
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
     ],
     [
-      "yellow",
-      "orange",
-      "yellow",
       "orange"
     ],
-    []
+    [
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ]
   ],
   "moves_limit": null,
-  "hints": 2
+  "hints": 5
 }

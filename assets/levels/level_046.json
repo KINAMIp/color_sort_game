@@ -1,0 +1,49 @@
+{
+  "id": "046",
+  "title": "Easy Flow 10",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "brown"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "orange"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

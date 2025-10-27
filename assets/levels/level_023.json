@@ -1,0 +1,43 @@
+{
+  "id": "023",
+  "title": "Calm Cascade 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}
