@@ -1,0 +1,67 @@
+{
+  "id": "084",
+  "title": "Neon Ripple 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

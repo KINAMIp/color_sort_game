@@ -1,17 +1,19 @@
-# Crayon
+# Water Color Sort Puzzle
 
-Crayon is a color sorting puzzle game built with Flutter and the Flame game engine. Players tap tubes to pour stacks of crayon segments, matching colors to complete each level. Progression, audio, and Firebase hooks are wired in so the game can evolve into a fully featured mobile title.
+Water Color Sort Puzzle is a vibrant pouring puzzler built with Flutter and the Flame game engine. Players tap bottles to pour stacks of liquid color, matching shades to clear each stage. A full 300-level campaign, evolving bottle silhouettes, and progression hooks make it ready to grow into a polished mobile release.
 
 ## Features
 
-- Flame-powered game board with tappable tubes and pour animations
-- Ten starter levels loaded from JSON files in `assets/levels`
+- Flame-powered game board with tappable bottles and satisfying pour animations
+- 300 handcrafted, solvable levels generated from JSON files in `assets/levels`
+- Difficulty curve that ramps from gentle practice pours to brain-bending late-game mixes
+- Bottle silhouettes upgrade every 50 levels, keeping visuals feeling fresh and rewarding
 - Provider-based app state that tracks unlocks, stars, and sound settings
 - Audio service ready for SFX playback (using placeholder assets)
 - HUD, pause, and level-complete overlays implemented in Flutter UI
 - Firebase service scaffolding for anonymous auth, cloud saves, and leaderboards
 - Continuous integration via GitHub Actions running `flutter analyze` and `flutter test`
-- Unit tests covering level parsing and core pour logic
+- Level generation utility in `tool/generate_levels.py` to rebuild the campaign deterministically
 
 ## Project structure
 
@@ -24,6 +26,7 @@ lib/
 │  │  ├─ crayon_game.dart
 │  │  ├─ components/
 │  │  │  ├─ tube_component.dart
+│  │  │  ├─ tube_style.dart
 │  │  │  └─ color_segment.dart
 │  │  └─ systems/pour_system.dart
 │  ├─ services/
@@ -44,6 +47,8 @@ assets/
 ├─ images/
 ├─ fonts/
 └─ levels/
+tool/
+└─ generate_levels.py
 ```
 
 ## Getting started
@@ -86,4 +91,4 @@ The GitHub Actions workflow in `.github/workflows/flutter-ci.yml` installs Flutt
 2. Run `flutter format`, `flutter analyze`, and `flutter test` before committing.
 3. Open a pull request describing your changes.
 
-Enjoy building on Crayon!
+Enjoy building on Water Color Sort Puzzle!

@@ -1,0 +1,49 @@
+{
+  "id": "065",
+  "title": "Tempo Pour 3",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "yellow"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "turquoise"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

@@ -1,0 +1,43 @@
+{
+  "id": "022",
+  "title": "Gentle Pour 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "green"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "turquoise"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

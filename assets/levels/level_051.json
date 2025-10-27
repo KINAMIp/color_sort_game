@@ -1,0 +1,43 @@
+{
+  "id": "051",
+  "title": "Vivid Stream 1",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "navy"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "purple"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

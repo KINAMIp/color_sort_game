@@ -1,0 +1,77 @@
+{
+  "id": "111",
+  "title": "Vivid Stream 13",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "brown"
+    ],
+    [
+      "red"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

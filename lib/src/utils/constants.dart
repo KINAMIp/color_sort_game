@@ -13,6 +13,17 @@ class GameColors {
     'teal': Color(0xFF4DB6AC),
     'pink': Color(0xFFF06292),
     'brown': Color(0xFF8D6E63),
+    'cyan': Color(0xFF4DD0E1),
+    'magenta': Color(0xFFBA68C8),
+    'lime': Color(0xFFC0CA33),
+    'indigo': Color(0xFF5C6BC0),
+    'maroon': Color(0xFF8E2430),
+    'navy': Color(0xFF3949AB),
+    'peach': Color(0xFFFFCC80),
+    'mint': Color(0xFF80CBC4),
+    'lavender': Color(0xFFB39DDB),
+    'turquoise': Color(0xFF26C6DA),
+    'coral': Color(0xFFFF8A65),
   };
 
   static Color fromName(String name) {
@@ -36,16 +47,6 @@ class AssetPaths {
 class LevelSets {
   LevelSets._();
 
-  static const List<String> defaultLevelIds = [
-    '001',
-    '002',
-    '003',
-    '004',
-    '005',
-    '006',
-    '007',
-    '008',
-    '009',
-    '010',
-  ];
+  static final List<String> defaultLevelIds =
+      List<String>.generate(300, (index) => (index + 1).toString().padLeft(3, '0'));
 }

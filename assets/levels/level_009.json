@@ -1,28 +1,31 @@
 {
   "id": "009",
-  "title": "Level 9",
+  "title": "Soft Splash 2",
   "tube_capacity": 4,
   "tubes": [
     [
-      "red",
-      "red",
-      "blue",
-      "blue"
+      "coral"
     ],
     [
-      "green",
-      "purple",
-      "green",
-      "purple"
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "magenta"
     ],
     [
       "yellow",
-      "orange",
       "yellow",
-      "orange"
-    ],
-    []
+      "yellow",
+      "yellow"
+    ]
   ],
   "moves_limit": null,
-  "hints": 2
+  "hints": 5
 }

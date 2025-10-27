@@ -1,0 +1,55 @@
+{
+  "id": "070",
+  "title": "Tempo Pour 4",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "green"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

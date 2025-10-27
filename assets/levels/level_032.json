@@ -1,0 +1,49 @@
+{
+  "id": "032",
+  "title": "Gentle Pour 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "green"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "indigo"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

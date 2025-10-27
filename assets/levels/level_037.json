@@ -1,0 +1,49 @@
+{
+  "id": "037",
+  "title": "Gentle Pour 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "indigo"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

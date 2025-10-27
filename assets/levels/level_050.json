@@ -1,0 +1,49 @@
+{
+  "id": "050",
+  "title": "Bright Breeze 10",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "indigo"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "red"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

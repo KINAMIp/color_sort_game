@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "color_sort_game" "\0"
+            VALUE "FileDescription", "Water Color Sort Puzzle" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "color_sort_game" "\0"
+            VALUE "InternalName", "Water Color Sort Puzzle" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "color_sort_game.exe" "\0"
-            VALUE "ProductName", "color_sort_game" "\0"
+            VALUE "OriginalFilename", "water_color_sort_puzzle.exe" "\0"
+            VALUE "ProductName", "Water Color Sort Puzzle" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

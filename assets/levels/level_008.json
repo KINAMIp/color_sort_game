@@ -1,28 +1,31 @@
 {
   "id": "008",
-  "title": "Level 8",
+  "title": "Calm Cascade 2",
   "tube_capacity": 4,
   "tubes": [
     [
-      "red",
-      "red",
-      "blue",
-      "blue"
+      "mint",
+      "mint",
+      "mint",
+      "mint"
     ],
     [
-      "green",
-      "purple",
-      "green",
-      "purple"
+      "maroon",
+      "maroon",
+      "maroon"
     ],
     [
-      "yellow",
-      "orange",
-      "yellow",
-      "orange"
+      "lavender",
+      "lavender",
+      "lavender"
     ],
-    []
+    [
+      "lavender"
+    ],
+    [
+      "maroon"
+    ]
   ],
   "moves_limit": null,
-  "hints": 2
+  "hints": 5
 }

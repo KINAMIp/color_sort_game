@@ -1,0 +1,43 @@
+{
+  "id": "021",
+  "title": "Easy Flow 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "brown"
+    ],
+    [
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

@@ -1,0 +1,49 @@
+{
+  "id": "061",
+  "title": "Vivid Stream 3",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "indigo"
+    ],
+    [
+      "purple"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

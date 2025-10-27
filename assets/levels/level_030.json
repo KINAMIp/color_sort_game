@@ -1,0 +1,43 @@
+{
+  "id": "030",
+  "title": "Bright Breeze 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "red"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

@@ -1,0 +1,37 @@
+{
+  "id": "018",
+  "title": "Calm Cascade 4",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "maroon"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "yellow"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

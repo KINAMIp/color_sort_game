@@ -1,0 +1,55 @@
+{
+  "id": "067",
+  "title": "Tricky Twist 4",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

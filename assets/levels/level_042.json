@@ -1,0 +1,49 @@
+{
+  "id": "042",
+  "title": "Gentle Pour 9",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "green"
+    ],
+    [
+      "brown"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

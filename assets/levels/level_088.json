@@ -1,0 +1,67 @@
+{
+  "id": "088",
+  "title": "Color Sprint 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "brown"
+    ],
+    [
+      "navy"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

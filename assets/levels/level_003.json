@@ -1,28 +1,31 @@
 {
   "id": "003",
-  "title": "Level 3",
+  "title": "Calm Cascade 1",
   "tube_capacity": 4,
   "tubes": [
     [
-      "red",
-      "red",
-      "blue",
-      "blue"
+      "mint",
+      "mint",
+      "mint"
     ],
     [
-      "green",
-      "purple",
-      "green",
-      "purple"
+      "navy",
+      "navy",
+      "navy",
+      "navy"
     ],
     [
-      "yellow",
-      "orange",
-      "yellow",
+      "mint"
+    ],
+    [
       "orange"
     ],
-    []
+    [
+      "orange",
+      "orange",
+      "orange"
+    ]
   ],
   "moves_limit": null,
-  "hints": 2
+  "hints": 5
 }

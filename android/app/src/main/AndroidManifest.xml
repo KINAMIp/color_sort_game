@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="color_sort_game"
+        android:label="Water Color Sort Puzzle"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

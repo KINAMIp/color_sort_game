@@ -1,0 +1,86 @@
+{
+  "id": "207",
+  "title": "Mythic Mix 2",
+  "tube_capacity": 6,
+  "tubes": [
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "turquoise"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 2
+}

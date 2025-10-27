@@ -1,0 +1,94 @@
+{
+  "id": "212",
+  "title": "Mythic Mix 3",
+  "tube_capacity": 6,
+  "tubes": [
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 2
+}

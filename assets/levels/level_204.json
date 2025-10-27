@@ -1,0 +1,86 @@
+{
+  "id": "204",
+  "title": "Elite Elixir 1",
+  "tube_capacity": 6,
+  "tubes": [
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "pink"
+    ],
+    [
+      "blue"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    []
+  ],
+  "moves_limit": null,
+  "hints": 2
+}

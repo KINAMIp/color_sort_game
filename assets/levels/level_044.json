@@ -1,0 +1,49 @@
+{
+  "id": "044",
+  "title": "Soft Splash 9",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "peach"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "maroon"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

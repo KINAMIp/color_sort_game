@@ -1,0 +1,49 @@
+{
+  "id": "038",
+  "title": "Calm Cascade 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "maroon"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

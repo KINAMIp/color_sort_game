@@ -1,0 +1,55 @@
+{
+  "id": "074",
+  "title": "Neon Ripple 5",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "navy"
+    ],
+    [
+      "teal"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

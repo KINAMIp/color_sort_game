@@ -1,0 +1,43 @@
+{
+  "id": "056",
+  "title": "Vivid Stream 2",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "yellow"
+    ],
+    [
+      "lavender"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

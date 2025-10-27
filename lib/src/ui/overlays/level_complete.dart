@@ -161,7 +161,8 @@ class _ConfettiLayer extends StatelessWidget {
                 curve: Curves.easeInOut,
               )
               .then(delay: const Duration(milliseconds: 200))
-              .animate(onComplete: (controller) => controller.repeat());
+              .animate(onComplete: (controller) => controller.repeat()),
+        );
       }),
     );
   }

@@ -1,0 +1,43 @@
+{
+  "id": "029",
+  "title": "Soft Splash 6",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "green"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "green",
+      "green",
+      "green"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

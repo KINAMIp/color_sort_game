@@ -1,0 +1,63 @@
+{
+  "id": "123",
+  "title": "Focus Flow 1",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "orange"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "orange",
+      "orange",
+      "orange",
+      "orange"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

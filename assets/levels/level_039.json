@@ -1,0 +1,49 @@
+{
+  "id": "039",
+  "title": "Soft Splash 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "cyan"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "magenta"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

@@ -1,0 +1,70 @@
+{
+  "id": "128",
+  "title": "Focus Flow 2",
+  "tube_capacity": 5,
+  "tubes": [
+    [
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan",
+      "cyan"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "turquoise"
+    ],
+    [
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow",
+      "yellow"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 3
+}

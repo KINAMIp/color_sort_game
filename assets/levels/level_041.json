@@ -1,0 +1,49 @@
+{
+  "id": "041",
+  "title": "Easy Flow 9",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "magenta"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "navy",
+      "navy",
+      "navy",
+      "navy"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

@@ -1,0 +1,67 @@
+{
+  "id": "087",
+  "title": "Tricky Twist 8",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "lime"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "lavender",
+      "lavender",
+      "lavender",
+      "lavender"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "maroon",
+      "maroon",
+      "maroon",
+      "maroon"
+    ],
+    [
+      "purple",
+      "purple",
+      "purple",
+      "purple"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "turquoise",
+      "turquoise",
+      "turquoise",
+      "turquoise"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue",
+      "blue"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

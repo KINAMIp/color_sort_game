@@ -1,0 +1,37 @@
+{
+  "id": "019",
+  "title": "Soft Splash 4",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "red"
+    ],
+    [
+      "teal",
+      "teal",
+      "teal",
+      "teal"
+    ],
+    [
+      "magenta",
+      "magenta",
+      "magenta",
+      "magenta"
+    ],
+    [
+      "blue"
+    ],
+    [
+      "blue",
+      "blue",
+      "blue"
+    ],
+    [
+      "red",
+      "red",
+      "red"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 5
+}

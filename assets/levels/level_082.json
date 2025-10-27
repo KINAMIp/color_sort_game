@@ -1,0 +1,61 @@
+{
+  "id": "082",
+  "title": "Tricky Twist 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "peach",
+      "peach",
+      "peach",
+      "peach"
+    ],
+    [
+      "green",
+      "green",
+      "green",
+      "green"
+    ],
+    [
+      "lime"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime"
+    ],
+    [
+      "red",
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "brown",
+      "brown",
+      "brown",
+      "brown"
+    ],
+    [
+      "mint",
+      "mint",
+      "mint"
+    ],
+    [
+      "mint"
+    ],
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}

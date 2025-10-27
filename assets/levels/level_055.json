@@ -1,0 +1,43 @@
+{
+  "id": "055",
+  "title": "Tempo Pour 1",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "pink",
+      "pink",
+      "pink",
+      "pink"
+    ],
+    [
+      "red"
+    ],
+    [
+      "coral"
+    ],
+    [
+      "coral",
+      "coral",
+      "coral"
+    ],
+    [
+      "indigo",
+      "indigo",
+      "indigo",
+      "indigo"
+    ],
+    [
+      "red",
+      "red",
+      "red"
+    ],
+    [
+      "lime",
+      "lime",
+      "lime",
+      "lime"
+    ]
+  ],
+  "moves_limit": null,
+  "hints": 4
+}
