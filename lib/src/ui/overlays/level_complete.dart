@@ -158,7 +158,10 @@ class _ConfettiLayer extends StatelessWidget {
             color: color.withOpacity(0.75),
             size: 20 + (index % 4) * 6,
           )
-              .animate(delay: Duration(milliseconds: index * 120))
+              .animate(
+                delay: Duration(milliseconds: index * 120),
+                onComplete: (controller) => controller.repeat(),
+              )
               .moveY(
                 begin: -80,
                 end: 120,
@@ -175,8 +178,7 @@ class _ConfettiLayer extends StatelessWidget {
                 duration: const Duration(seconds: 3),
                 curve: Curves.easeInOut,
               )
-              .then(delay: const Duration(milliseconds: 200))
-              .animate(onComplete: (controller) => controller.repeat()),
+              .then(delay: const Duration(milliseconds: 200)),
         );
       }),
     );

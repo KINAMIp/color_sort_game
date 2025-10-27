@@ -20,6 +20,7 @@ class AudioService {
       return;
     }
     try {
+      FlameAudio.audioCache.prefix = 'assets/audio/';
       await FlameAudio.audioCache.loadAll(const [
         AssetPaths.audioPour,
         AssetPaths.audioInvalid,
@@ -157,7 +158,9 @@ class AudioService {
 
   Future<bool> _tryLoadOptional(String asset) async {
     try {
-      await FlameAudio.audioCache.load(asset);
+      await FlameAudio.audioCache
+          .load(asset)
+          .timeout(const Duration(seconds: 2));
       return true;
     } catch (_) {
       return false;
