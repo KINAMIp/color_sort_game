@@ -11,7 +11,7 @@ import '../state/app_state.dart';
 import 'components/tube_component.dart';
 import 'systems/pour_system.dart';
 
-class CrayonGame extends FlameGame with HasTappables {
+class CrayonGame extends FlameGame with HasTappableComponents {
   CrayonGame({
     required this.level,
     required this.appState,
