@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 
 import '../data/level_model.dart';
@@ -11,7 +12,7 @@ import '../state/app_state.dart';
 import 'components/tube_component.dart';
 import 'systems/pour_system.dart';
 
-class CrayonGame extends FlameGame with HasTappableComponents {
+class CrayonGame extends FlameGame with TapCallbacks {
   CrayonGame({
     required this.level,
     required this.appState,
@@ -39,6 +40,18 @@ class CrayonGame extends FlameGame with HasTappableComponents {
 
   List<List<Color>> get _currentStacks =>
       tubes.map((tube) => tube.segments.map((segment) => segment.color).toList()).toList();
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    super.onTapDown(event);
+    final tapPosition = event.localPosition;
+    for (final tube in tubes) {
+      if (tube.containsPoint(tapPosition)) {
+        tube.handleTap();
+        break;
+      }
+    }
+  }
 
   @override
   Future<void> onLoad() async {

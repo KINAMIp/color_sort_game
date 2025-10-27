@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
+import 'package:flame/extensions.dart';
 
 import 'color_segment.dart';
 
-class TubeComponent extends PositionComponent with TapCallbacks {
+class TubeComponent extends PositionComponent {
   TubeComponent({
     required this.index,
     required this.capacity,
@@ -79,6 +79,11 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     segments.addAll(incoming);
   }
 
+  bool containsPoint(Vector2 point) {
+    final rect = Rect.fromLTWH(position.x, position.y, size.x, size.y);
+    return rect.contains(point.toOffset());
+  }
+
   List<ColorSegment> previewPourTo(TubeComponent destination) {
     if (!canPourTo(destination)) {
       return const <ColorSegment>[];
@@ -92,8 +97,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     );
   }
 
-  @override
-  void onTapDown(TapDownEvent event) {
+  void handleTap() {
     onTapped?.call(this);
   }
 
