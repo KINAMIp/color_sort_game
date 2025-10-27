@@ -13,7 +13,7 @@ import '../state/app_state.dart';
 import 'components/tube_component.dart';
 import 'systems/pour_system.dart';
 
-class CrayonGame extends FlameGame with TapDetector {
+class CrayonGame extends FlameGame with HasTappables {
   CrayonGame({
     required this.level,
     required this.appState,
@@ -44,6 +44,7 @@ class CrayonGame extends FlameGame with TapDetector {
 
   @override
   void onTapDown(TapDownInfo info) {
+    super.onTapDown(info);
     final tapPosition = info.eventPosition.game;
     for (final tube in tubes) {
       if (tube.containsPoint(tapPosition)) {
