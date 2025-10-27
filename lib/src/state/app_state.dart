@@ -22,6 +22,9 @@ class AppState extends ChangeNotifier {
   Set<String> unlockedLevels = {LevelSets.defaultLevelIds.first};
   Map<String, int> levelStars = <String, int>{};
   String? userId;
+  int _completedGames = 0;
+
+  int get completedGames => _completedGames;
 
   Future<void> initialize() async {
     if (initialized) {
@@ -29,6 +32,7 @@ class AppState extends ChangeNotifier {
     }
     soundEnabled = await storageService.loadSoundEnabled();
     unlockedLevels = await storageService.loadUnlockedLevels();
+    _completedGames = await storageService.loadCompletedGames();
     await audioService.initialize();
     audioService.setMuted(!soundEnabled);
     await firebaseService.initialize();
@@ -60,6 +64,8 @@ class AppState extends ChangeNotifier {
       unlockedLevels.add(LevelSets.defaultLevelIds[index + 1]);
     }
     await storageService.saveUnlockedLevels(unlockedLevels);
+    _completedGames += 1;
+    await storageService.saveCompletedGames(_completedGames);
     if (userId != null) {
       await firebaseService.saveProgress(
         userId: userId!,

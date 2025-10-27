@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-enum TubeDesign { classic, slender, potion, royal }
+enum TubeDesign { classic, slender, potion, royal, neon }
 
 class TubeVisualStyle {
   const TubeVisualStyle({
@@ -55,127 +55,43 @@ class TubeVisualStyle {
   }
 
   static TubeVisualStyle forLevel(int levelNumber) {
-    final stage = ((levelNumber - 1).clamp(0, 299)) ~/ 10;
+    final stage = ((levelNumber - 1).clamp(0, 299)) ~/ 12;
     final presets = <TubeVisualStyle>[
       const TubeVisualStyle(
-        design: TubeDesign.classic,
-        borderColor: Color(0xFF1E88E5),
-        innerColor: Color(0xFFE1F5FE),
-        selectionColor: Color(0xFF00BCD4),
-        strokeWidth: 4,
-        width: 78,
-        height: 198,
-        topPadding: 16,
-        bottomPadding: 14,
-        segmentGap: 4,
-      ),
-      const TubeVisualStyle(
-        design: TubeDesign.classic,
-        borderColor: Color(0xFFAD1457),
-        innerColor: Color(0xFFF8BBD0),
-        selectionColor: Color(0xFFFF80AB),
-        strokeWidth: 4.2,
-        width: 80,
-        height: 202,
-        topPadding: 16,
-        bottomPadding: 14,
-        segmentGap: 4,
-      ),
-      const TubeVisualStyle(
-        design: TubeDesign.classic,
-        borderColor: Color(0xFF00897B),
-        innerColor: Color(0xFFE0F2F1),
-        selectionColor: Color(0xFF4DB6AC),
-        strokeWidth: 4.2,
-        width: 82,
-        height: 204,
-        topPadding: 17,
-        bottomPadding: 15,
-        segmentGap: 4,
-      ),
-      const TubeVisualStyle(
-        design: TubeDesign.slender,
-        borderColor: Color(0xFF283593),
-        innerColor: Color(0xFFE8EAF6),
-        selectionColor: Color(0xFF5C6BC0),
-        strokeWidth: 4.4,
-        width: 84,
+        design: TubeDesign.neon,
+        borderColor: Color(0xFFF5FBFF),
+        innerColor: Color(0xFF141442),
+        selectionColor: Color(0xFFFFD54F),
+        strokeWidth: 5.6,
+        width: 86,
         height: 210,
         topPadding: 18,
-        bottomPadding: 15,
+        bottomPadding: 16,
         segmentGap: 4.2,
       ),
       const TubeVisualStyle(
-        design: TubeDesign.slender,
-        borderColor: Color(0xFF6A1B9A),
-        innerColor: Color(0xFFF3E5F5),
-        selectionColor: Color(0xFFBA68C8),
-        strokeWidth: 4.5,
-        width: 86,
-        height: 212,
-        topPadding: 18,
-        bottomPadding: 16,
-        segmentGap: 4.5,
-      ),
-      const TubeVisualStyle(
-        design: TubeDesign.potion,
-        borderColor: Color(0xFF00695C),
-        innerColor: Color(0xFFB2DFDB),
-        selectionColor: Color(0xFF26A69A),
-        strokeWidth: 4.6,
+        design: TubeDesign.neon,
+        borderColor: Color(0xFFFDF4FF),
+        innerColor: Color(0xFF1B164F),
+        selectionColor: Color(0xFFFFEA80),
+        strokeWidth: 5.8,
         width: 88,
         height: 214,
-        topPadding: 20,
-        bottomPadding: 16,
-        segmentGap: 4.8,
-      ),
-      const TubeVisualStyle(
-        design: TubeDesign.potion,
-        borderColor: Color(0xFF4527A0),
-        innerColor: Color(0xFFD1C4E9),
-        selectionColor: Color(0xFFEFB7FF),
-        strokeWidth: 4.8,
-        width: 90,
-        height: 216,
-        topPadding: 20,
+        topPadding: 18,
         bottomPadding: 17,
-        segmentGap: 5,
+        segmentGap: 4.4,
       ),
       const TubeVisualStyle(
-        design: TubeDesign.royal,
-        borderColor: Color(0xFF283593),
-        innerColor: Color(0xFFECEFF1),
-        selectionColor: Color(0xFFFFD740),
-        strokeWidth: 5,
+        design: TubeDesign.neon,
+        borderColor: Color(0xFFF0E9FF),
+        innerColor: Color(0xFF120F38),
+        selectionColor: Color(0xFFFFC778),
+        strokeWidth: 6.1,
         width: 90,
         height: 218,
         topPadding: 19,
         bottomPadding: 18,
-        segmentGap: 5,
-      ),
-      const TubeVisualStyle(
-        design: TubeDesign.royal,
-        borderColor: Color(0xFF0D47A1),
-        innerColor: Color(0xFFE3F2FD),
-        selectionColor: Color(0xFFFFEB3B),
-        strokeWidth: 5.2,
-        width: 92,
-        height: 220,
-        topPadding: 20,
-        bottomPadding: 18,
-        segmentGap: 5,
-      ),
-      const TubeVisualStyle(
-        design: TubeDesign.royal,
-        borderColor: Color(0xFF311B92),
-        innerColor: Color(0xFFEDE7F6),
-        selectionColor: Color(0xFFFFF59D),
-        strokeWidth: 5.4,
-        width: 94,
-        height: 222,
-        topPadding: 20,
-        bottomPadding: 18,
-        segmentGap: 5.2,
+        segmentGap: 4.6,
       ),
     ];
 
@@ -185,14 +101,13 @@ class TubeVisualStyle {
     if (extraStage == 0) {
       return baseStyle;
     }
-    final growth = 1 + extraStage * 0.03;
     return baseStyle.copyWith(
-      width: baseStyle.width * (1 + extraStage * 0.015),
-      height: baseStyle.height * growth,
-      strokeWidth: baseStyle.strokeWidth + extraStage * 0.25,
-      topPadding: baseStyle.topPadding + extraStage * 0.6,
-      bottomPadding: baseStyle.bottomPadding + extraStage * 0.4,
-      segmentGap: baseStyle.segmentGap + extraStage * 0.05,
+      width: baseStyle.width + extraStage * 1.4,
+      height: baseStyle.height + extraStage * 2.4,
+      strokeWidth: baseStyle.strokeWidth + extraStage * 0.18,
+      topPadding: baseStyle.topPadding + extraStage * 0.24,
+      bottomPadding: baseStyle.bottomPadding + extraStage * 0.22,
+      segmentGap: baseStyle.segmentGap + extraStage * 0.04,
     );
   }
 }

@@ -57,10 +57,10 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBackground(
-        colors: const [Color(0xFF66DAFF), Color(0xFF8FA6FF), Color(0xFFF7C3FF)],
+        colors: const [Color(0xFF0E0A2F), Color(0xFF1E1253), Color(0xFF3A1B8A)],
         beginAlignment: Alignment.topCenter,
         endAlignment: Alignment.bottomCenter,
-        opacity: 0.22,
+        opacity: 0.18,
         darkOverlay: true,
         showWaterBalloons: true,
         child: Stack(

@@ -185,6 +185,7 @@ class CrayonGame extends FlameGame {
     final base = 18 + band * 2;
     final capacityBonus = (level.tubeCapacity - 4) * 2;
     final densityBonus = math.max(0, filledTubes - 3);
-    return base + capacityBonus + densityBonus;
+    final completionBonus = appState.completedGames * 2;
+    return base + capacityBonus + densityBonus + completionBonus;
   }
 }
