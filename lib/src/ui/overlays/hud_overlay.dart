@@ -77,14 +77,24 @@ class _LevelCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            game.level.title.isNotEmpty ? game.level.title : 'Level $levelId',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            'LEVEL ${int.tryParse(levelId) ?? levelId}',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.6,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 1.1,
                 ),
           ),
-          const SizedBox(height: 14),
+          if (game.level.title.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              game.level.title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.white.withOpacity(0.9),
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+          ],
+          const SizedBox(height: 18),
           ValueListenableBuilder<int>(
             valueListenable: game.movesNotifier,
             builder: (context, value, _) {
@@ -114,7 +124,9 @@ class _LevelCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          hasLimit ? '$remaining of ${game.movesLimit}' : '${game.movesMade}',
+                          hasLimit
+                              ? '$remaining / ${game.movesLimit}'
+                              : '${game.movesMade}',
                           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,

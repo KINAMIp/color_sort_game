@@ -105,10 +105,10 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     if (isEmpty || destination.isFull) {
       return false;
     }
-    if (destination.isEmpty) {
-      return true;
-    }
-    return destination.topColor == topColor;
+    // Mixing colors is allowed as long as there is space available in the
+    // destination tube. The end goal is still to sort the colors, but we do not
+    // restrict players from experimenting with different combinations.
+    return true;
   }
 
   List<ColorSegment> takeTopSegments(int amount) {
