@@ -105,26 +105,70 @@ class CrayonGame extends FlameGame {
     if (tubes.isEmpty || size.x == 0) {
       return;
     }
-    final padding = 48.0;
-    final maxPerRow = math.min(8, tubes.length);
-    final rowCount = tubes.length > 8 ? 2 : 1;
-    final rowHeights = rowCount == 1
-        ? [size.y * 0.6]
-        : [size.y * 0.46, size.y * 0.78];
+    final horizontalPadding = math.max(24.0, size.x * 0.05);
+    final verticalPadding = math.max(48.0, size.y * 0.1);
+    final availableWidth = math.max(0.0, size.x - horizontalPadding * 2);
+    final availableHeight = math.max(0.0, size.y - verticalPadding * 2);
+    final tubeWidth = tubes.first.size.x;
+    final tubeHeight = tubes.first.size.y;
+    const minHorizontalGap = 18.0;
+    const minVerticalGap = 28.0;
+
+    var bestColumns = 1;
+    var bestScore = double.negativeInfinity;
+    for (var columns = 1; columns <= math.min(tubes.length, 8); columns++) {
+      final rows = (tubes.length / columns).ceil();
+      final horizontalGap = columns > 1
+          ? (availableWidth - columns * tubeWidth) / (columns - 1)
+          : availableWidth;
+      final verticalGap = rows > 1
+          ? (availableHeight - rows * tubeHeight) / (rows - 1)
+          : availableHeight;
+      if (columns > 1 && horizontalGap < minHorizontalGap) {
+        continue;
+      }
+      if (rows > 1 && verticalGap < minVerticalGap) {
+        continue;
+      }
+      final score = math.min(horizontalGap, verticalGap);
+      if (score > bestScore) {
+        bestScore = score;
+        bestColumns = columns;
+      }
+    }
+
+    if (bestScore == double.negativeInfinity) {
+      bestColumns = math.min(tubes.length, 8);
+    }
+
+    final rowCount = (tubes.length / bestColumns).ceil();
+    final horizontalGap = bestColumns > 1
+        ? (availableWidth - bestColumns * tubeWidth) / (bestColumns - 1)
+        : 0.0;
+    final clampedHorizontalGap = bestColumns > 1
+        ? math.max(minHorizontalGap, horizontalGap)
+        : 0.0;
+    final usedWidth = bestColumns * tubeWidth + (bestColumns - 1) * clampedHorizontalGap;
+    final startX = horizontalPadding + math.max(0, (availableWidth - usedWidth) / 2);
+
+    final verticalGap = rowCount > 1
+        ? (availableHeight - rowCount * tubeHeight) / (rowCount - 1)
+        : 0.0;
+    final clampedVerticalGap = rowCount > 1
+        ? math.max(minVerticalGap, verticalGap)
+        : 0.0;
+    final usedHeight = rowCount * tubeHeight + (rowCount - 1) * clampedVerticalGap;
+    final startY = verticalPadding + math.max(0, (availableHeight - usedHeight) / 2);
+
     var index = 0;
     for (var row = 0; row < rowCount; row++) {
-      final remaining = tubes.length - index;
-      final count = rowCount == 1
-          ? tubes.length
-          : row == 0
-              ? math.min(maxPerRow, (tubes.length / 2).ceil())
-              : remaining;
-      final availableWidth = size.x - padding * 2;
-      final spacing = count > 1 ? availableWidth / (count - 1) : 0;
+      final count = math.min(bestColumns, tubes.length - index);
+      final rowUsedWidth = count * tubeWidth + (count - 1) * clampedHorizontalGap;
+      final rowStartX = startX + (usedWidth - rowUsedWidth) / 2;
       for (var i = 0; i < count; i++) {
         final tube = tubes[index++];
-        final dx = padding + spacing * i - tube.size.x / 2;
-        final dy = rowHeights[row] - tube.size.y / 2;
+        final dx = rowStartX + i * (tubeWidth + clampedHorizontalGap);
+        final dy = startY + row * (tubeHeight + clampedVerticalGap);
         tube.position = Vector2(dx, dy);
       }
     }
