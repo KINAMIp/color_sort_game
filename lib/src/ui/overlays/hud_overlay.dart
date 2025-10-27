@@ -35,6 +35,7 @@ class HudOverlay extends StatelessWidget {
                 borderRadius: 24,
                 color: Colors.black.withOpacity(0.25),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
