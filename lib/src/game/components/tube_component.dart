@@ -2,7 +2,10 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/painting.dart';
 
 import 'color_segment.dart';
 import 'tube_style.dart';
@@ -26,6 +29,11 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   final void Function(TubeComponent component)? onTapped;
 
   bool _selected = false;
+  bool _isAnimatingPour = false;
+  double _rippleProgress = 0;
+  double _sparkleTimer = 0;
+  final List<_SparkleParticle> _sparkles = [];
+  static final math.Random _random = math.Random();
 
   bool get isSelected => _selected;
 
@@ -40,6 +48,10 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   bool get isFull => segments.length >= capacity;
 
   Color? get topColor => segments.isEmpty ? null : segments.last.color;
+
+  bool get isSolved =>
+      segments.length == capacity &&
+      segments.every((segment) => segment.color == segments.first.color);
 
   int get consecutiveTopCount {
     if (segments.isEmpty) {
@@ -105,6 +117,69 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     onTapped?.call(this);
   }
 
+  Future<void> animatePourTo(TubeComponent destination, int amount) async {
+    if (_isAnimatingPour) {
+      return;
+    }
+    _isAnimatingPour = true;
+    final direction = destination.position.x >= position.x ? 1 : -1;
+    final bend = direction > 0 ? -0.32 : 0.32;
+    final controller = EffectController(
+      duration: const Duration(milliseconds: 260),
+      reverseDuration: const Duration(milliseconds: 240),
+      curve: Curves.easeInOutCubic,
+    );
+    final rotateEffect = RotateEffect.by(
+      bend,
+      controller,
+      target: this,
+      anchor: Anchor.bottomCenter,
+    );
+    add(rotateEffect);
+    await rotateEffect.completed;
+    _isAnimatingPour = false;
+  }
+
+  void triggerRipple({double strength = 1}) {
+    _rippleProgress = strength.clamp(0, 1);
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (_rippleProgress > 0) {
+      _rippleProgress = math.max(0, _rippleProgress - dt * 1.6);
+    }
+
+    if (isSolved) {
+      _sparkleTimer += dt;
+      if (_sparkleTimer >= 0.24) {
+        _sparkleTimer = 0;
+        _sparkles.add(
+          _SparkleParticle(
+            position: Offset(
+              _random.nextDouble(),
+              (_random.nextDouble().clamp(0.1, 0.92)) as double,
+            ),
+            lifetime: lerpDouble(0.6, 1.1, _random.nextDouble())!,
+            baseSize: lerpDouble(6, 11, _random.nextDouble())!,
+          ),
+        );
+      }
+    } else {
+      _sparkles.clear();
+      _sparkleTimer = 0;
+    }
+
+    for (var i = _sparkles.length - 1; i >= 0; i--) {
+      final sparkle = _sparkles[i];
+      sparkle.elapsed += dt;
+      if (sparkle.elapsed >= sparkle.lifetime) {
+        _sparkles.removeAt(i);
+      }
+    }
+  }
+
   @override
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
@@ -124,9 +199,28 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       ..color = style.innerColor;
 
     canvas.drawPath(shapePath, fillPaint);
+    if (isSolved) {
+      canvas.save();
+      canvas.clipPath(shapePath);
+      final glowPaint = Paint()
+        ..shader = RadialGradient(
+          colors: [
+            style.selectionColor.withOpacity(0.55),
+            Colors.transparent,
+          ],
+        ).createShader(
+          Rect.fromCircle(
+            center: Offset(size.x / 2, size.y * 0.55),
+            radius: size.x,
+          ),
+        );
+      canvas.drawCircle(Offset(size.x / 2, size.y * 0.55), size.x, glowPaint);
+      canvas.restore();
+    }
     canvas.drawPath(shapePath, borderPaint);
 
     if (segments.isEmpty) {
+      _renderRipple(canvas);
       return;
     }
 
@@ -154,6 +248,9 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       );
     }
     canvas.restore();
+
+    _renderRipple(canvas);
+    _renderSparkles(canvas);
   }
 
   Path _buildBottlePath() {
@@ -274,4 +371,69 @@ class TubeComponent extends PositionComponent with TapCallbacks {
         return 14 - 5 * progress;
     }
   }
+
+  void _renderRipple(Canvas canvas) {
+    if (_rippleProgress <= 0) {
+      return;
+    }
+    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final center = Offset(
+      size.x / 2,
+      size.y - style.bottomPadding - availableHeight * 0.18,
+    );
+    final radius = lerpDouble(size.x * 0.35, size.x * 0.7, 1 - _rippleProgress)!;
+    final strokeWidth = lerpDouble(6, 1.6, 1 - _rippleProgress)!;
+    final ripplePaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..color = style.selectionColor.withOpacity(_rippleProgress * 0.7);
+    canvas.drawCircle(center, radius, ripplePaint);
+  }
+
+  void _renderSparkles(Canvas canvas) {
+    if (_sparkles.isEmpty) {
+      return;
+    }
+    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    for (final sparkle in _sparkles) {
+      final t = (sparkle.elapsed / sparkle.lifetime).clamp(0.0, 1.0);
+      final fade = 1 - t;
+      final sparkleSize = sparkle.baseSize * (1 + t * 0.6);
+      final dx = lerpDouble(
+        style.width * 0.2,
+        style.width * 0.8,
+        sparkle.position.dx,
+      )!;
+      final dy = size.y - style.bottomPadding - availableHeight * sparkle.position.dy;
+      final center = Offset(dx, dy - t * 12);
+      final sparklePaint = Paint()
+        ..color = Colors.white.withOpacity(0.65 * fade)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+      _drawSparkle(canvas, center, sparkleSize, sparklePaint);
+    }
+  }
+
+  void _drawSparkle(Canvas canvas, Offset center, double size, Paint paint) {
+    final half = size / 2;
+    final path = Path()
+      ..moveTo(center.dx, center.dy - half)
+      ..lineTo(center.dx + half * 0.5, center.dy)
+      ..lineTo(center.dx, center.dy + half)
+      ..lineTo(center.dx - half * 0.5, center.dy)
+      ..close();
+    canvas.drawPath(path, paint);
+  }
+}
+
+class _SparkleParticle {
+  _SparkleParticle({
+    required this.position,
+    required this.lifetime,
+    required this.baseSize,
+  });
+
+  final Offset position;
+  final double lifetime;
+  final double baseSize;
+  double elapsed = 0;
 }

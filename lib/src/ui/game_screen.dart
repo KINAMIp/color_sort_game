@@ -57,8 +57,12 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBackground(
-        colors: const [Color(0xFF0F172A), Color(0xFF1E1B4B)],
+        colors: const [Color(0xFF66DAFF), Color(0xFF8FA6FF), Color(0xFFF7C3FF)],
+        beginAlignment: Alignment.topCenter,
+        endAlignment: Alignment.bottomCenter,
+        opacity: 0.22,
         darkOverlay: true,
+        showWaterBalloons: true,
         child: Stack(
           children: [
             GameWidget(
@@ -91,26 +95,40 @@ class _GameScreenState extends State<GameScreen> {
               },
             ),
             Positioned(
-              top: 40,
-              left: 16,
+              top: 32,
+              left: 18,
               child: GestureDetector(
                 onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
+                child: DecoratedBox(
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.circular(28),
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFFF7BAC), Color(0xFF9C6BFF)],
+                      colors: [Color(0xFF9AE7FF), Color(0xFF7288FF)],
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 14,
+                        offset: const Offset(0, 8),
                       ),
                     ],
                   ),
-                  child: const Icon(Icons.arrow_back_rounded, color: Colors.white),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                    child: Row(
+                      children: [
+                        Icon(Icons.arrow_back_rounded, color: Colors.white),
+                        SizedBox(width: 6),
+                        Text(
+                          'Menu',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

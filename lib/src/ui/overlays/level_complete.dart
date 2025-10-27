@@ -59,7 +59,9 @@ class LevelCompleteOverlay extends StatelessWidget {
                   ),
                   const SizedBox(height: 18),
                   Text(
-                    'Moves used: ${game.movesMade}',
+                    game.hasMoveLimit
+                        ? 'Moves left: ${game.movesRemaining}/${game.movesLimit}'
+                        : 'Moves used: ${game.movesMade}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Colors.white.withOpacity(0.85),
                         ),
