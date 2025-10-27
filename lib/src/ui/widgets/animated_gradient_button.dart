@@ -134,10 +134,12 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
             child: Stack(
               alignment: Alignment.center,
               children: [
-                AnimatedOpacity(
-                  opacity: _hovering ? 0.28 : 0,
-                  duration: const Duration(milliseconds: 260),
-                  child: _BubblyOverlay(colors: widget.colors),
+                Positioned.fill(
+                  child: AnimatedOpacity(
+                    opacity: _hovering ? 0.28 : 0,
+                    duration: const Duration(milliseconds: 260),
+                    child: _BubblyOverlay(colors: widget.colors),
+                  ),
                 ),
                 Padding(
                   padding: widget.padding,
