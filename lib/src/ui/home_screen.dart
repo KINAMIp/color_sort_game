@@ -25,6 +25,135 @@ class HomeScreen extends StatelessWidget {
           );
         }
         appState.audioService.enableAmbientLoop();
+        final actionButtons = Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedGradientButton(
+              text: 'Continue Level ${appState.selectedLevelId.padLeft(3, '0')}',
+              colors: const [Color(0xFFF72585), Color(0xFF7209B7)],
+              icon: Icons.play_arrow_rounded,
+              onPressed: () async {
+                final level = await LevelBundle.loadLevel(appState.selectedLevelId);
+                if (!context.mounted) return;
+                await Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (_, animation, __) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: GameScreen(level: level),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            AnimatedGradientButton(
+              text: 'Level Select',
+              colors: const [Color(0xFF4CC9F0), Color(0xFF3A86FF)],
+              icon: Icons.auto_awesome_motion,
+              onPressed: () async {
+                final selected = await Navigator.of(context).push<Level>(
+                  PageRouteBuilder(
+                    pageBuilder: (_, animation, __) => FadeTransition(
+                      opacity: animation,
+                      child: const LevelSelectScreen(),
+                    ),
+                  ),
+                );
+                if (selected != null) {
+                  context.read<AppState>().selectLevel(selected.id);
+                }
+              },
+            ),
+          ],
+        );
+
+        Widget buildBottomBanner() {
+          return Align(
+            alignment: Alignment.bottomRight,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF9AE7FF), Color(0xFF9C6BFF)],
+                ),
+                borderRadius: BorderRadius.circular(18),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.18),
+                    blurRadius: 18,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.water_drop_rounded, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(
+                      'New glass shapes unlock every 10 levels!',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+
+        Widget buildHeader() {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AnimatedGradientText(
+                      'Splash & Sort',
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFF4CC9F0),
+                          Color(0xFF4361EE),
+                          Color(0xFFF72585),
+                        ],
+                      ),
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                            fontSize: 52,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.2,
+                          ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Drift through liquid rainbows while you mix, swirl, and sort glowing water layers across 300 aquatic puzzles.',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Colors.white.withOpacity(0.86),
+                            height: 1.3,
+                            shadows: const [
+                              Shadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 3)),
+                            ],
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 16),
+              GradientSoundToggle(
+                value: appState.soundEnabled,
+                onChanged: (_) => appState.toggleSound(),
+              ),
+            ],
+          );
+        }
+
         return Scaffold(
           body: AnimatedBackground(
             colors: const [
@@ -40,137 +169,36 @@ class HomeScreen extends StatelessWidget {
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final shouldScroll = constraints.maxHeight < 720;
+
+                    Widget content = Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AnimatedGradientText(
-                                'Splash & Sort',
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF4CC9F0),
-                                    Color(0xFF4361EE),
-                                    Color(0xFFF72585),
-                                  ],
-                                ),
-                                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                                      fontSize: 52,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: 1.2,
-                                    ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                'Drift through liquid rainbows while you mix, swirl, and sort glowing water layers across 300 aquatic puzzles.',
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      color: Colors.white.withOpacity(0.86),
-                                      height: 1.3,
-                                      shadows: const [
-                                        Shadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 3)),
-                                      ],
-                                    ),
-                              ),
-                            ],
+                        buildHeader(),
+                        const SizedBox(height: 36),
+                        if (shouldScroll) ...[
+                          actionButtons,
+                          const SizedBox(height: 32),
+                          buildBottomBanner(),
+                        ] else ...[
+                          Expanded(
+                            child: Center(child: actionButtons),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        GradientSoundToggle(
-                          value: appState.soundEnabled,
-                          onChanged: (_) => appState.toggleSound(),
-                        ),
+                          buildBottomBanner(),
+                        ],
                       ],
-                    ),
-                    const SizedBox(height: 36),
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AnimatedGradientButton(
-                              text: 'Continue Level ${appState.selectedLevelId.padLeft(3, '0')}',
-                              colors: const [Color(0xFFF72585), Color(0xFF7209B7)],
-                              icon: Icons.play_arrow_rounded,
-                              onPressed: () async {
-                                final level = await LevelBundle.loadLevel(appState.selectedLevelId);
-                                if (!context.mounted) return;
-                                await Navigator.of(context).push(
-                                  PageRouteBuilder(
-                                    pageBuilder: (_, animation, __) {
-                                      return FadeTransition(
-                                        opacity: animation,
-                                        child: GameScreen(level: level),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            AnimatedGradientButton(
-                              text: 'Level Select',
-                              colors: const [Color(0xFF4CC9F0), Color(0xFF3A86FF)],
-                              icon: Icons.auto_awesome_motion,
-                              onPressed: () async {
-                                final selected = await Navigator.of(context).push<Level>(
-                                  PageRouteBuilder(
-                                    pageBuilder: (_, animation, __) => FadeTransition(
-                                      opacity: animation,
-                                      child: const LevelSelectScreen(),
-                                    ),
-                                  ),
-                                );
-                                if (selected != null) {
-                                  context.read<AppState>().selectLevel(selected.id);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF9AE7FF), Color(0xFF9C6BFF)],
-                          ),
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.18),
-                              blurRadius: 18,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.water_drop_rounded, color: Colors.white),
-                              const SizedBox(width: 8),
-                              Text(
-                                'New glass shapes unlock every 10 levels!',
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+
+                    if (shouldScroll) {
+                      content = SingleChildScrollView(
+                        child: content,
+                      );
+                    }
+
+                    return content;
+                  },
                 ),
               ),
             ),
