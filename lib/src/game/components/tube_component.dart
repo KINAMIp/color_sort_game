@@ -146,28 +146,97 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     onTapped?.call(this);
   }
 
-  Future<void> animatePourTo(TubeComponent destination, int amount) async {
+  Future<void> animatePourTo(
+    TubeComponent destination,
+    int amount, {
+    Future<void> Function()? onPour,
+  }) async {
     if (_isAnimatingPour) {
       return;
     }
     _isAnimatingPour = true;
-    final direction = destination.position.x >= position.x ? 1 : -1;
-    final bend = direction > 0 ? -0.32 : 0.32;
-    final controller = EffectController(
-      duration: 0.26,
-      reverseDuration: 0.24,
-      curve: Curves.easeInOutCubic,
-    );
+    final originalPosition = position.clone();
     final previousAnchor = anchor;
     anchor = Anchor.bottomCenter;
-    final rotateEffect = RotateEffect.by(
-      bend,
-      controller,
+    final horizontalDelta = destination.position.x - position.x;
+    final verticalDelta = destination.position.y - position.y;
+    final approachOffset = Vector2(
+      horizontalDelta * 0.45,
+      (verticalDelta * 0.25) - size.y * 0.12,
     );
-    add(rotateEffect);
-    await rotateEffect.completed;
-    anchor = previousAnchor;
-    _isAnimatingPour = false;
+    final maxLift = -size.y * 0.36;
+    final maxDrop = size.y * 0.24;
+    final clampedYOffset = approachOffset.y.clamp(maxLift, maxDrop).toDouble();
+    final approachPosition = Vector2(
+      originalPosition.x + approachOffset.x,
+      originalPosition.y + clampedYOffset,
+    );
+    final bendDirection = horizontalDelta >= 0 ? 1 : -1;
+    final bendAmount = bendDirection > 0 ? -0.38 : 0.38;
+    final defaultPourDuration = Duration(milliseconds: 220 + (amount * 70));
+
+    final moveForward = MoveEffect.to(
+      approachPosition,
+      EffectController(
+        duration: 0.28,
+        curve: Curves.easeInOutCubic,
+      ),
+    );
+    final tiltForward = RotateEffect.by(
+      bendAmount,
+      EffectController(
+        duration: 0.26,
+        curve: Curves.easeInOutCubic,
+      ),
+    );
+
+    add(moveForward);
+    add(tiltForward);
+
+    try {
+      await Future.wait([moveForward.completed, tiltForward.completed]);
+
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+
+      if (onPour != null) {
+        await onPour();
+      } else {
+        await Future<void>.delayed(defaultPourDuration);
+      }
+
+      final settleTilt = RotateEffect.by(
+        bendAmount * -0.12,
+        EffectController(
+          duration: 0.18,
+          curve: Curves.easeOutCubic,
+        ),
+      );
+      add(settleTilt);
+      await settleTilt.completed;
+
+      final moveBack = MoveEffect.to(
+        originalPosition,
+        EffectController(
+          duration: 0.34,
+          curve: Curves.easeInOutCubic,
+        ),
+      );
+      final tiltBack = RotateEffect.by(
+        -bendAmount * 0.88,
+        EffectController(
+          duration: 0.32,
+          curve: Curves.easeInOutCubic,
+        ),
+      );
+      add(moveBack);
+      add(tiltBack);
+      await Future.wait([moveBack.completed, tiltBack.completed]);
+    } finally {
+      angle = 0;
+      position = originalPosition;
+      anchor = previousAnchor;
+      _isAnimatingPour = false;
+    }
   }
 
   void triggerRipple({double strength = 1}) {
@@ -319,19 +388,27 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       final segment = segments[i];
       final progress = capacity <= 1 ? 0.0 : i / (capacity - 1);
       final inset = _horizontalInsetForProgress(progress);
+      final gap = _segmentGap * 0.3;
       final rect = Rect.fromLTWH(
         inset,
-        size.y - _bottomPadding - (i + 1) * segmentHeight + _segmentGap / 2,
+        size.y - _bottomPadding - (i + 1) * segmentHeight + gap / 2,
         size.x - inset * 2,
-        segmentHeight - _segmentGap,
+        segmentHeight - gap,
+      );
+      final path = _buildLiquidSegmentPath(
+        rect,
+        progress: progress,
+        isTopSegment: i == segments.length - 1,
+        isBottomSegment: i == 0,
       );
       final paint = _buildSegmentPaint(rect, segment.color);
-      final borderRadius = Radius.circular(_segmentRadiusForProgress(progress));
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(rect, borderRadius),
-        paint,
+      canvas.drawPath(path, paint);
+      _renderLiquidHighlights(
+        canvas,
+        path,
+        rect,
+        isTopSegment: i == segments.length - 1,
       );
-      _renderSegmentHighlights(canvas, rect, borderRadius);
     }
     canvas.restore();
 
@@ -450,22 +527,6 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     }
   }
 
-  double _segmentRadiusForProgress(double progress) {
-    switch (style.design) {
-      case TubeDesign.classic:
-        return 12;
-      case TubeDesign.slender:
-        return 11 - 3 * progress;
-      case TubeDesign.potion:
-        final delta = (progress - 0.5).abs();
-        return 13 - 4 * delta;
-      case TubeDesign.royal:
-        return 14 - 5 * progress;
-      case TubeDesign.neon:
-        return 16;
-    }
-  }
-
   Paint _buildFillPaint() {
     final paint = Paint()..style = PaintingStyle.fill;
     if (style.design == TubeDesign.neon) {
@@ -495,29 +556,146 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       ).createShader(rect);
   }
 
-  void _renderSegmentHighlights(Canvas canvas, Rect rect, Radius radius) {
-    if (style.design != TubeDesign.neon) {
-      return;
+  Path _buildLiquidSegmentPath(
+    Rect rect, {
+    required double progress,
+    required bool isTopSegment,
+    required bool isBottomSegment,
+  }) {
+    final left = rect.left;
+    final right = rect.right;
+    final top = rect.top;
+    final bottom = rect.bottom;
+    final width = rect.width;
+    final height = rect.height;
+    final topWaveHeight = height * (isTopSegment ? 0.36 : 0.2);
+    final bottomCurve = height * (isBottomSegment ? 0.46 : 0.28);
+    final crestOffset = lerpDouble(0.32, 0.18, progress.clamp(0.0, 1.0))!;
+    final controlWidth = width * (0.32 + 0.12 * (1 - progress));
+
+    final path = Path();
+    path.moveTo(left + bottomCurve * 0.6, bottom);
+    path.quadraticBezierTo(left, bottom, left, bottom - bottomCurve * 0.6);
+
+    if (isTopSegment) {
+      final crestY = top + topWaveHeight * crestOffset;
+      final troughY = top - topWaveHeight * 0.3;
+      final midX = rect.center.dx;
+      path.cubicTo(
+        left + controlWidth * 0.38,
+        crestY,
+        midX - controlWidth * 0.32,
+        troughY,
+        midX,
+        crestY + topWaveHeight * 0.12,
+      );
+      path.cubicTo(
+        midX + controlWidth * 0.32,
+        crestY + topWaveHeight * 0.42,
+        right - controlWidth * 0.38,
+        crestY + topWaveHeight * 0.24,
+        right,
+        crestY + topWaveHeight * 0.68,
+      );
+    } else {
+      final topCurve = height * (0.28 - 0.12 * (1 - progress));
+      final peakY = top + topCurve * 0.2;
+      path.quadraticBezierTo(left, peakY, left + width * 0.12, top + topCurve * 0.08);
+      path.quadraticBezierTo(
+        rect.center.dx,
+        top - topCurve * 0.22,
+        right - width * 0.12,
+        top + topCurve * 0.08,
+      );
+      path.quadraticBezierTo(right, peakY, right, top + topCurve * 0.62);
     }
+
+    path.quadraticBezierTo(right, bottom, right - bottomCurve * 0.6, bottom);
+    path.close();
+    return path;
+  }
+
+  void _renderLiquidHighlights(
+    Canvas canvas,
+    Path segmentPath,
+    Rect rect, {
+    required bool isTopSegment,
+  }) {
+    canvas.save();
+    canvas.clipPath(segmentPath);
+
     final highlightRect = Rect.fromLTWH(
-      rect.left + rect.width * 0.64,
-      rect.top + rect.height * 0.08,
+      rect.left + rect.width * 0.58,
+      rect.top + rect.height * 0.12,
       rect.width * 0.24,
-      rect.height * 0.82,
+      rect.height * 0.78,
     );
     final highlightPaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.55),
+          Colors.white.withOpacity(0.24),
           Colors.white.withOpacity(0.0),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(highlightRect);
     canvas.drawRRect(
-      RRect.fromRectAndRadius(highlightRect, Radius.circular(radius.x / 1.6)),
+      RRect.fromRectAndRadius(highlightRect, Radius.circular(rect.width * 0.18)),
       highlightPaint,
     );
+
+    if (isTopSegment) {
+      final sheenPath = Path()
+        ..moveTo(rect.left + rect.width * 0.16, rect.top + rect.height * 0.2)
+        ..quadraticBezierTo(
+          rect.center.dx,
+          rect.top - rect.height * 0.08,
+          rect.right - rect.width * 0.16,
+          rect.top + rect.height * 0.2,
+        )
+        ..lineTo(rect.right - rect.width * 0.2, rect.top + rect.height * 0.34)
+        ..quadraticBezierTo(
+          rect.center.dx,
+          rect.top + rect.height * 0.12,
+          rect.left + rect.width * 0.2,
+          rect.top + rect.height * 0.34,
+        )
+        ..close();
+      final sheenPaint = Paint()
+        ..shader = LinearGradient(
+          colors: [
+            Colors.white.withOpacity(0.28),
+            Colors.white.withOpacity(0.0),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ).createShader(rect);
+      canvas.drawPath(sheenPath, sheenPaint);
+    }
+
+    if (style.design == TubeDesign.neon) {
+      final neonGlow = Rect.fromLTWH(
+        rect.left + rect.width * 0.66,
+        rect.top + rect.height * 0.1,
+        rect.width * 0.2,
+        rect.height * 0.82,
+      );
+      final neonPaint = Paint()
+        ..shader = LinearGradient(
+          colors: [
+            Colors.white.withOpacity(0.55),
+            Colors.white.withOpacity(0.0),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ).createShader(neonGlow);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(neonGlow, Radius.circular(rect.width * 0.2)),
+        neonPaint,
+      );
+    }
+
+    canvas.restore();
   }
 
   void _renderNeonGlassHighlights(Canvas canvas, Path shapePath) {

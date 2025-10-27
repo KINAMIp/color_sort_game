@@ -101,12 +101,12 @@ class _LevelCard extends StatelessWidget {
               final hasLimit = game.hasMoveLimit;
               final remaining = hasLimit ? value : game.movesMade;
               final label = hasLimit ? 'Moves left' : 'Moves used';
+              final displayValue = hasLimit ? '$remaining' : '${game.movesMade}';
               return Row(
                 children: [
                   _MovesBubble(
                     remaining: remaining,
                     hasLimit: hasLimit,
-                    total: game.movesLimit,
                     progress: game.movesProgress,
                   ),
                   const SizedBox(width: 16),
@@ -124,9 +124,7 @@ class _LevelCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          hasLimit
-                              ? '$remaining / ${game.movesLimit}'
-                              : '${game.movesMade}',
+                          displayValue,
                           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,
@@ -149,13 +147,11 @@ class _MovesBubble extends StatelessWidget {
   const _MovesBubble({
     required this.remaining,
     required this.hasLimit,
-    required this.total,
     required this.progress,
   });
 
   final int remaining;
   final bool hasLimit;
-  final int total;
   final double progress;
 
   @override
@@ -211,18 +207,6 @@ class _MovesBubble extends StatelessWidget {
                       ),
                 ),
               ),
-              if (hasLimit)
-                Positioned(
-                  bottom: 6,
-                  child: Text(
-                    '${(animatedValue * 100).clamp(0, 100).round()}%',
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
-                    ),
-                  ),
-                ),
             ],
           ),
         );

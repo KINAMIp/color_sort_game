@@ -71,7 +71,7 @@ class _LevelCompleteOverlayState extends State<LevelCompleteOverlay> {
                   const SizedBox(height: 18),
                   Text(
                     widget.game.hasMoveLimit
-                        ? 'Moves left: ${widget.game.movesRemaining}/${widget.game.movesLimit}'
+                        ? 'Moves left: ${widget.game.movesRemaining}'
                         : 'Moves used: ${widget.game.movesMade}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Colors.white.withOpacity(0.85),
