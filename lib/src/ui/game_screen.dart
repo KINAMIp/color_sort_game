@@ -196,16 +196,54 @@ class _GameScreenState extends State<GameScreen> {
     final shouldExit = await showDialog<bool>(
           context: context,
           builder: (dialogContext) {
+            final colorScheme = Theme.of(dialogContext).colorScheme;
             return AlertDialog(
-              title: const Text('Exit the game?'),
-              content: const Text('Your current progress in this level will be lost. Do you want to exit?'),
+              backgroundColor: const Color(0xFF10213A),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              title: Text(
+                'Exit the game?',
+                style: Theme.of(dialogContext).textTheme.headlineSmall?.copyWith(
+                      color: const Color(0xFF9AE7FF),
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.4,
+                    ),
+              ),
+              content: Text(
+                'Your current progress in this level will be lost. Do you want to exit?',
+                style: Theme.of(dialogContext).textTheme.titleMedium?.copyWith(
+                      color: Colors.white.withOpacity(0.92),
+                      fontWeight: FontWeight.w600,
+                      height: 1.4,
+                    ),
+              ),
+              actionsPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              actionsAlignment: MainAxisAlignment.spaceBetween,
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(false),
+                  style: TextButton.styleFrom(
+                    foregroundColor: const Color(0xFF9AE7FF),
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
                   child: const Text('Stay'),
                 ),
                 FilledButton(
                   onPressed: () => Navigator.of(dialogContext).pop(true),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: colorScheme.secondary,
+                    foregroundColor: Colors.white,
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.6,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
                   child: const Text('Exit'),
                 ),
               ],
