@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../game/crayon_game.dart';
+import '../widgets/animated_gradient_button.dart';
+import '../widgets/animated_gradient_text.dart';
+import '../widgets/glass_card.dart';
 
 class PauseOverlay extends StatelessWidget {
   const PauseOverlay({
@@ -14,42 +17,65 @@ class PauseOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 24),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Paused',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  game.resumeGame();
-                },
-                child: const Text('Resume'),
-              ),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: () {
-                  game.resetLevel();
-                  game.resumeGame();
-                },
-                child: const Text('Restart Level'),
-              ),
-              const SizedBox(height: 12),
-              TextButton(
-                onPressed: onExit,
-                child: const Text('Exit to Menu'),
-              ),
-            ],
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Container(
+            color: Colors.black.withOpacity(0.45),
           ),
         ),
-      ),
+        Center(
+          child: GlassCard(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 36),
+            borderRadius: 32,
+            color: Colors.white.withOpacity(0.18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AnimatedGradientText(
+                  'Paused',
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFFF7BAC), Color(0xFF9C6BFF)],
+                  ),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w800,
+                      ),
+                ),
+                const SizedBox(height: 24),
+                AnimatedGradientButton(
+                  text: 'Resume',
+                  colors: const [Color(0xFF7CF6F3), Color(0xFF7288FF)],
+                  onPressed: () {
+                    game.resumeGame();
+                  },
+                ),
+                const SizedBox(height: 16),
+                AnimatedGradientButton(
+                  text: 'Restart Level',
+                  colors: const [Color(0xFFFFCA7A), Color(0xFFFF7BAC)],
+                  onPressed: () {
+                    game.resetLevel();
+                    game.resumeGame();
+                  },
+                ),
+                const SizedBox(height: 16),
+                TextButton(
+                  onPressed: onExit,
+                  child: const Text(
+                    'Exit to Menu',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
