@@ -44,11 +44,9 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
 
   @override
   Widget build(BuildContext context) {
-    final gradient = LinearGradient(
-      colors: widget.colors,
-      begin: widget.beginAlignment,
-      end: widget.endAlignment,
-    );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final size = _resolveSize(constraints, MediaQuery.sizeOf(context));
 
     return AnimatedBuilder(
       animation: _controller,
@@ -106,9 +104,14 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
           ),
         );
       },
-      child: widget.child,
     );
   }
+}
+
+Size _resolveSize(BoxConstraints constraints, Size fallback) {
+  final width = constraints.hasBoundedWidth ? constraints.maxWidth : fallback.width;
+  final height = constraints.hasBoundedHeight ? constraints.maxHeight : fallback.height;
+  return Size(width, height);
 }
 
 class _GlowingBlob extends StatelessWidget {
