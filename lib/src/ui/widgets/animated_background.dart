@@ -57,50 +57,52 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
         final wave1 = math.sin(2 * math.pi * t);
         final wave2 = math.cos(2 * math.pi * (t + 0.25));
         final wave3 = math.sin(2 * math.pi * (t + 0.5));
-        return DecoratedBox(
-          decoration: BoxDecoration(gradient: gradient),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              if (widget.darkOverlay)
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.black.withOpacity(0.4),
-                        Colors.black.withOpacity(0.65),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+        return SizedBox.expand(
+          child: DecoratedBox(
+            decoration: BoxDecoration(gradient: gradient),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                if (widget.darkOverlay)
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withOpacity(0.4),
+                          Colors.black.withOpacity(0.65),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
                     ),
                   ),
+                Positioned(
+                  top: 120 + wave1 * 40,
+                  right: -60 + wave2 * 30,
+                  child: _GlowingBlob(
+                    size: 220,
+                    color: Colors.white.withOpacity(widget.opacity),
+                  ),
                 ),
-              Positioned(
-                top: 120 + wave1 * 40,
-                right: -60 + wave2 * 30,
-                child: _GlowingBlob(
-                  size: 220,
-                  color: Colors.white.withOpacity(widget.opacity),
+                Positioned(
+                  bottom: 80 + wave2 * 50,
+                  left: -40 + wave3 * 30,
+                  child: _GlowingBlob(
+                    size: 180,
+                    color: Colors.white.withOpacity(widget.opacity),
+                  ),
                 ),
-              ),
-              Positioned(
-                bottom: 80 + wave2 * 50,
-                left: -40 + wave3 * 30,
-                child: _GlowingBlob(
-                  size: 180,
-                  color: Colors.white.withOpacity(widget.opacity),
+                Positioned(
+                  top: 20 + wave3 * 30,
+                  left: 80 + wave1 * 50,
+                  child: _GlowingBlob(
+                    size: 120,
+                    color: Colors.white.withOpacity(widget.opacity * 0.8),
+                  ),
                 ),
-              ),
-              Positioned(
-                top: 20 + wave3 * 30,
-                left: 80 + wave1 * 50,
-                child: _GlowingBlob(
-                  size: 120,
-                  color: Colors.white.withOpacity(widget.opacity * 0.8),
-                ),
-              ),
-              if (child != null) child!,
-            ],
+                if (child != null) child!,
+              ],
+            ),
           ),
         );
       },
