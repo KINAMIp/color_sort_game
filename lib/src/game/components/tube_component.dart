@@ -134,7 +134,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     anchor = Anchor.bottomCenter;
     final rotateEffect = RotateEffect.by(
       bend,
-      controller: controller,
+      controller,
     );
     add(rotateEffect);
     await rotateEffect.completed;
