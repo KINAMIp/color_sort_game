@@ -40,8 +40,8 @@ class _GameScreenState extends State<GameScreen> {
         level: _currentLevel,
         appState: appState,
         audioService: appState.audioService,
-        onShowOverlay: (_) => setState(() {}),
-        onHideOverlay: (_) => setState(() {}),
+        onShowOverlay: (_) => _scheduleRebuild(),
+        onHideOverlay: (_) => _scheduleRebuild(),
       );
       _gameInitialized = true;
     }
@@ -137,12 +137,24 @@ class _GameScreenState extends State<GameScreen> {
           level: _currentLevel,
           appState: appState,
           audioService: appState.audioService,
-          onShowOverlay: (_) => setState(() {}),
-          onHideOverlay: (_) => setState(() {}),
+          onShowOverlay: (_) => _scheduleRebuild(),
+          onHideOverlay: (_) => _scheduleRebuild(),
         );
       });
     } else {
       Navigator.of(context).pop();
     }
+  }
+
+  void _scheduleRebuild() {
+    if (!mounted) {
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
   }
 }
