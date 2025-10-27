@@ -34,8 +34,10 @@ class GradientSoundToggle extends StatelessWidget {
           ],
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
+            SizedBox(
+              width: 64,
               child: AnimatedAlign(
                 duration: const Duration(milliseconds: 220),
                 alignment: value ? Alignment.centerRight : Alignment.centerLeft,
