@@ -9,6 +9,7 @@ import 'widgets/animated_background.dart';
 import 'widgets/animated_gradient_button.dart';
 import 'widgets/animated_gradient_text.dart';
 import 'widgets/sound_toggle.dart';
+import 'widgets/water_pouring_animation.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -177,6 +178,8 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         buildHeader(),
+                        const SizedBox(height: 28),
+                        const WaterPouringAnimation(),
                         const SizedBox(height: 36),
                         if (shouldScroll) ...[
                           actionButtons,
