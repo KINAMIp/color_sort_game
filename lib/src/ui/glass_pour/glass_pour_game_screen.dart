@@ -392,10 +392,12 @@ class _GlassPourGameScreenState extends State<GlassPourGameScreen>
           AnimatedBuilder(
             animation: _counterPulseController,
             builder: (context, child) {
-              final scale = 1 + (_movesRemaining == 0
-                      ? (math.sin(_counterPulseController.value * math.pi) * 0.12)
-                      : 0)
-                  .clamp(0.0, 1.0);
+              final double scale = (1 +
+                      (_movesRemaining == 0
+                          ? (math.sin(_counterPulseController.value * math.pi) * 0.12)
+                          : 0))
+                  .clamp(1.0, 1.12)
+                  .toDouble();
               return Transform.scale(
                 scale: scale,
                 child: Container(
