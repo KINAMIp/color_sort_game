@@ -1,0 +1,28 @@
+{
+  "id": "007",
+  "title": "Level 7",
+  "tube_capacity": 4,
+  "tubes": [
+    [
+      "red",
+      "red",
+      "blue",
+      "blue"
+    ],
+    [
+      "green",
+      "purple",
+      "green",
+      "purple"
+    ],
+    [
+      "yellow",
+      "orange",
+      "yellow",
+      "orange"
+    ],
+    []
+  ],
+  "moves_limit": null,
+  "hints": 2
+}

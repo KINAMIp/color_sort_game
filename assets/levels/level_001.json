@@ -1,0 +1,13 @@
+{
+  "id": "001",
+  "title": "Getting Started",
+  "tube_capacity": 4,
+  "tubes": [
+    ["red", "blue", "red", "blue"],
+    ["green", "green", "yellow", "yellow"],
+    ["purple", "purple", "orange", "orange"],
+    []
+  ],
+  "moves_limit": null,
+  "hints": 3
+}
