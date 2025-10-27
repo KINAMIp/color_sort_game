@@ -25,7 +25,10 @@ class _AnimatedGradientTextState extends State<AnimatedGradientText>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.duration)
+    final duration = widget.duration.inMicroseconds <= 0
+        ? const Duration(milliseconds: 16)
+        : widget.duration;
+    _controller = AnimationController(vsync: this, duration: duration)
       ..repeat(reverse: true);
   }
 

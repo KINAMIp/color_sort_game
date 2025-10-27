@@ -80,11 +80,14 @@ class LiquidStreamComponent extends PositionComponent {
   }
 
   void _drawBubbles(Canvas canvas, Path path, double eased) {
-    final metricsList = path.computeMetrics();
-    if (metricsList.isEmpty) {
+    final metricsIterator = path.computeMetrics().iterator;
+    if (!metricsIterator.moveNext()) {
       return;
     }
-    final metrics = metricsList.first;
+    final metrics = metricsIterator.current;
+    if (metrics.length <= 0) {
+      return;
+    }
     for (var i = 0; i < _bubbleOffsets.length; i++) {
       final travel = (eased + _bubbleOffsets[i]) % 1.0;
       final position = metrics.getTangentForOffset(metrics.length * travel);
