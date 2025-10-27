@@ -43,6 +43,8 @@ class Level {
       return const <List<Color>>[];
     }
 
+    final levelNumber = int.tryParse(id) ?? 1;
+    final colorMap = GameColors.colorMapForLevel(tubes, levelNumber);
     final colorPool = <String>[];
     final emptyIndices = <int>[];
     for (var i = 0; i < tubes.length; i++) {
@@ -56,7 +58,16 @@ class Level {
 
     if (colorPool.isEmpty) {
       return tubes
-          .map((tube) => tube.map(GameColors.fromName).toList())
+          .map(
+            (tube) =>
+                tube
+                    .map(
+                      (name) =>
+                          colorMap[name.trim().toLowerCase()] ??
+                          GameColors.fallbackColor(name, levelNumber),
+                    )
+                    .toList(),
+          )
           .toList(growable: false);
     }
 
@@ -109,7 +120,10 @@ class Level {
         if (cursor >= colorPool.length) {
           break;
         }
-        stacks[i].add(GameColors.fromName(colorPool[cursor++]));
+        final colorName = colorPool[cursor++];
+        final color =
+            colorMap[colorName.trim().toLowerCase()] ?? GameColors.fallbackColor(colorName, levelNumber);
+        stacks[i].add(color);
       }
     }
 

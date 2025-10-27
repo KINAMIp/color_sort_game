@@ -37,6 +37,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   final List<_BubbleParticle> _floatingBubbles = [];
   final List<_SplashRipple> _splashRipples = [];
   static final math.Random _random = math.Random();
+  double _layoutScale = 1;
 
   bool get isSelected => _selected;
 
@@ -45,6 +46,31 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       _selected = value;
     }
   }
+
+  double get layoutScale => _layoutScale;
+
+  void updateLayoutScale(double scale) {
+    final clamped = scale.clamp(0.3, 1.0);
+    if ((_layoutScale - clamped).abs() < 0.001) {
+      return;
+    }
+    _layoutScale = clamped;
+    size = Vector2(style.width * _layoutScale, style.height * _layoutScale);
+  }
+
+  double get _widthScale => size.x / style.width;
+
+  double get _heightScale => size.y / style.height;
+
+  double get _strokeWidth => style.strokeWidth * _widthScale;
+
+  double get _topPadding => style.topPadding * _heightScale;
+
+  double get _bottomPadding => style.bottomPadding * _heightScale;
+
+  double get _segmentGap => style.segmentGap * _heightScale;
+
+  double get _availableHeight => size.y - _topPadding - _bottomPadding;
 
   bool get isEmpty => segments.isEmpty;
 
@@ -176,15 +202,15 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   Vector2 getPourMouthPosition() {
     return Vector2(
       position.x + size.x / 2,
-      position.y + style.topPadding,
+      position.y + _topPadding,
     );
   }
 
   Vector2 getPourLandingPosition({required int incomingLayers}) {
-    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final availableHeight = _availableHeight;
     final segmentHeight = availableHeight / capacity;
     final targetIndex = segments.length + incomingLayers - 0.5;
-    final y = position.y + size.y - style.bottomPadding - targetIndex * segmentHeight;
+    final y = position.y + size.y - _bottomPadding - targetIndex * segmentHeight;
     return Vector2(position.x + size.x / 2, y);
   }
 
@@ -253,7 +279,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     final shapePath = _buildBottlePath();
     final borderPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = style.strokeWidth
+      ..strokeWidth = _strokeWidth
       ..color = _selected ? style.selectionColor : style.borderColor;
     final fillPaint = _buildFillPaint();
 
@@ -287,7 +313,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
 
     canvas.save();
     canvas.clipPath(shapePath);
-    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final availableHeight = _availableHeight;
     final segmentHeight = availableHeight / capacity;
     for (var i = 0; i < segments.length; i++) {
       final segment = segments[i];
@@ -295,9 +321,9 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       final inset = _horizontalInsetForProgress(progress);
       final rect = Rect.fromLTWH(
         inset,
-        size.y - style.bottomPadding - (i + 1) * segmentHeight + style.segmentGap / 2,
+        size.y - _bottomPadding - (i + 1) * segmentHeight + _segmentGap / 2,
         size.x - inset * 2,
-        segmentHeight - style.segmentGap,
+        segmentHeight - _segmentGap,
       );
       final paint = _buildSegmentPaint(rect, segment.color);
       final borderRadius = Radius.circular(_segmentRadiusForProgress(progress));
@@ -543,7 +569,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
 
     final baseGlowRect = Rect.fromLTWH(
       size.x * 0.18,
-      size.y - style.bottomPadding - size.x * 0.26,
+      size.y - _bottomPadding - size.x * 0.26,
       size.x * 0.64,
       size.x * 0.3,
     );
@@ -563,9 +589,9 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     }
     final rimRect = Rect.fromLTWH(
       size.x * 0.08,
-      -style.strokeWidth * 0.4,
+      -_strokeWidth * 0.4,
       size.x * 0.84,
-      style.strokeWidth * 2.2,
+      _strokeWidth * 2.2,
     );
     final rimPaint = Paint()
       ..shader = LinearGradient(
@@ -627,10 +653,10 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     if (_rippleProgress <= 0) {
       return;
     }
-    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final availableHeight = _availableHeight;
     final center = Offset(
       size.x / 2,
-      size.y - style.bottomPadding - availableHeight * 0.18,
+      size.y - _bottomPadding - availableHeight * 0.18,
     );
     final radius = lerpDouble(size.x * 0.35, size.x * 0.7, 1 - _rippleProgress)!;
     final strokeWidth = lerpDouble(6, 1.6, 1 - _rippleProgress)!;
@@ -645,7 +671,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     if (_sparkles.isEmpty) {
       return;
     }
-    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final availableHeight = _availableHeight;
     for (final sparkle in _sparkles) {
       final t = (sparkle.elapsed / sparkle.lifetime).clamp(0.0, 1.0);
       final fade = 1 - t;
@@ -655,7 +681,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
         style.width * 0.8,
         sparkle.position.dx,
       )!;
-      final dy = size.y - style.bottomPadding - availableHeight * sparkle.position.dy;
+      final dy = size.y - _bottomPadding - availableHeight * sparkle.position.dy;
       final center = Offset(dx, dy - t * 12);
       final sparklePaint = Paint()
         ..color = Colors.white.withOpacity(0.65 * fade)
@@ -679,13 +705,13 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     if (_floatingBubbles.isEmpty) {
       return;
     }
-    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final availableHeight = _availableHeight;
     canvas.save();
     canvas.clipPath(shapePath);
     for (final bubble in _floatingBubbles) {
       final fade = 1 - (bubble.elapsed / bubble.lifetime).clamp(0.0, 1.0);
       final x = size.x / 2 + bubble.horizontalShift * size.x * 0.45;
-      final y = size.y - style.bottomPadding - availableHeight * bubble.progress;
+      final y = size.y - _bottomPadding - availableHeight * bubble.progress;
       final radius = bubble.radius * (1 + (1 - fade) * 0.25);
       final rect = Rect.fromCircle(center: Offset(x, y), radius: radius);
       final paint = Paint()
@@ -704,12 +730,12 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     if (_splashRipples.isEmpty) {
       return;
     }
-    final availableHeight = size.y - style.topPadding - style.bottomPadding;
+    final availableHeight = _availableHeight;
     for (final splash in _splashRipples) {
       final t = (splash.elapsed / splash.lifetime).clamp(0.0, 1.0);
       final center = Offset(
         size.x / 2,
-        size.y - style.bottomPadding - availableHeight * splash.baseProgress,
+        size.y - _bottomPadding - availableHeight * splash.baseProgress,
       );
       final radius = lerpDouble(size.x * 0.18, size.x * 0.36, t)!;
       final paint = Paint()

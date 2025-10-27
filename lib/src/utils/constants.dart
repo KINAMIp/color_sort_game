@@ -1,38 +1,94 @@
+import 'dart:math' as math;
 import 'dart:ui';
 
 class GameColors {
   GameColors._();
 
-  static const Map<String, Color> namedColors = {
-    'red': Color(0xFFE57373),
-    'blue': Color(0xFF64B5F6),
-    'green': Color(0xFF81C784),
-    'yellow': Color(0xFFFFF176),
-    'orange': Color(0xFFFFB74D),
-    'purple': Color(0xFF9575CD),
-    'teal': Color(0xFF4DB6AC),
-    'pink': Color(0xFFF06292),
-    'brown': Color(0xFF8D6E63),
-    'cyan': Color(0xFF4DD0E1),
-    'magenta': Color(0xFFBA68C8),
-    'lime': Color(0xFFC0CA33),
-    'indigo': Color(0xFF5C6BC0),
-    'maroon': Color(0xFF8E2430),
-    'navy': Color(0xFF3949AB),
-    'peach': Color(0xFFFFCC80),
-    'mint': Color(0xFF80CBC4),
-    'lavender': Color(0xFFB39DDB),
-    'turquoise': Color(0xFF26C6DA),
-    'coral': Color(0xFFFF8A65),
-  };
+  static const List<Color> _masterPalette = [
+    Color(0xFFED2A2A),
+    Color(0xFF2A80ED),
+    Color(0xFFEDE12A),
+    Color(0xFF8CED2A),
+    Color(0xFF2AEDED),
+    Color(0xFF8C2AED),
+    Color(0xFFED4F2A),
+    Color(0xFF67ED2A),
+    Color(0xFF2AC9ED),
+    Color(0xFFB02AED),
+    Color(0xFFED732A),
+    Color(0xFF43ED2A),
+    Color(0xFF2AA4ED),
+    Color(0xFFD52AED),
+    Color(0xFFED982A),
+    Color(0xFF2AED36),
+    Color(0xFFED2AE1),
+    Color(0xFFEDBD2A),
+    Color(0xFF2AED5B),
+    Color(0xFF2A5BED),
+    Color(0xFFED2ABD),
+    Color(0xFF2AED80),
+    Color(0xFF2A36ED),
+    Color(0xFFED2A98),
+    Color(0xFFD5ED2A),
+    Color(0xFF2AEDA4),
+    Color(0xFF432AED),
+    Color(0xFFED2A73),
+    Color(0xFFB0ED2A),
+    Color(0xFF2AEDC9),
+    Color(0xFF672AED),
+    Color(0xFFED2A4F),
+  ];
 
-  static Color fromName(String name) {
-    final color = namedColors[name.toLowerCase()];
-    if (color == null) {
-      throw ArgumentError('Unknown color name: $name');
+  static List<Color> paletteForLevel(int levelNumber) {
+    final safeIndex = (levelNumber - 1).clamp(0, 299).toInt();
+    final unlocked = math.min(_masterPalette.length, 3 + safeIndex ~/ 5);
+    final palette = _masterPalette.take(unlocked).toList(growable: false);
+    if (palette.isEmpty) {
+      return const <Color>[];
     }
-    return color;
+    if (levelNumber >= 300 && unlocked == _masterPalette.length) {
+      final shuffled = List<Color>.from(palette);
+      shuffled.shuffle(math.Random(levelNumber));
+      return shuffled;
+    }
+    return palette;
   }
+
+  static Map<String, Color> colorMapForLevel(List<List<String>> tubes, int levelNumber) {
+    final palette = paletteForLevel(levelNumber);
+    if (palette.isEmpty) {
+      return <String, Color>{};
+    }
+    final seen = <String>{};
+    final orderedNames = <String>[];
+    for (final tube in tubes) {
+      for (final rawName in tube) {
+        final normalized = rawName.trim().toLowerCase();
+        if (normalized.isEmpty || seen.contains(normalized)) {
+          continue;
+        }
+        seen.add(normalized);
+        orderedNames.add(normalized);
+      }
+    }
+
+    final mapping = <String, Color>{};
+    for (var i = 0; i < orderedNames.length; i++) {
+      mapping[orderedNames[i]] = palette[i % palette.length];
+    }
+    return mapping;
+  }
+
+  static Color fallbackColor(String name, int levelNumber) {
+    final palette = paletteForLevel(levelNumber);
+    if (palette.isEmpty) {
+      return const Color(0xFFFFFFFF);
+    }
+    final index = name.trim().toLowerCase().hashCode.abs() % palette.length;
+    return palette[index];
+  }
+
+  static List<Color> get masterPalette => _masterPalette;
 }
 
 class AssetPaths {
