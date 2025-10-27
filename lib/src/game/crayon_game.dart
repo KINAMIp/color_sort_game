@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 
 import '../data/level_model.dart';
 import '../services/audio_service.dart';
@@ -39,6 +40,18 @@ class CrayonGame extends FlameGame with HasTappables {
 
   List<List<Color>> get _currentStacks =>
       tubes.map((tube) => tube.segments.map((segment) => segment.color).toList()).toList();
+
+  @override
+  void onTapDown(TapDownInfo info) {
+    super.onTapDown(info);
+    final tapPosition = info.eventPosition.game;
+    for (final tube in tubes) {
+      if (tube.containsPoint(tapPosition)) {
+        tube.handleTap();
+        break;
+      }
+    }
+  }
 
   @override
   Future<void> onLoad() async {
