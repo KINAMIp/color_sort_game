@@ -10,7 +10,7 @@ class _FakeAudioService extends AudioService {
   void playInvalid() {}
 
   @override
-  void playPour() {}
+  void playPour({double intensity = 0.6, double viscosity = 0.5}) {}
 
   @override
   void playWin() {}

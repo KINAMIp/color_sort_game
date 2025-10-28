@@ -36,6 +36,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   final List<_SparkleParticle> _sparkles = [];
   final List<_BubbleParticle> _floatingBubbles = [];
   final List<_SplashRipple> _splashRipples = [];
+  final List<_OverflowDroplet> _overflowDroplets = [];
   static final math.Random _random = math.Random();
   double _layoutScale = 1;
 
@@ -172,6 +173,28 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     _rippleProgress = strength.clamp(0, 1);
   }
 
+  void showOverflowEffect({ColorSegment? segment, double intensity = 1}) {
+    final baseColor = segment?.color ?? style.selectionColor;
+    final viscosity = segment?.viscosity ?? 0.5;
+    final dropletCount = (6 + (intensity * 6)).round();
+    for (var i = 0; i < dropletCount; i++) {
+      final angle = lerpDouble(-math.pi / 2.6, math.pi / 2.6, _random.nextDouble())!;
+      final speed = lerpDouble(80, 160, 1 - viscosity)! * lerpDouble(0.6, 1.1, _random.nextDouble())!;
+      final velocity = Offset(math.cos(angle) * speed, -math.sin(angle) * speed);
+      final radius = lerpDouble(2.8, 5.6, 1 - viscosity)!;
+      _overflowDroplets.add(
+        _OverflowDroplet(
+          color: baseColor,
+          position: Offset(size.x / 2, _topPadding + size.x * 0.12),
+          velocity: velocity,
+          radius: radius,
+          lifetime: lerpDouble(0.38, 0.86, 1 - viscosity)!,
+        ),
+      );
+    }
+    triggerRipple(strength: math.max(_rippleProgress, 0.6));
+  }
+
   void emitPourEffects(Color color) {
     final layerIndex = segments.isEmpty ? 0.0 : segments.length - 0.5;
     final startProgress = (layerIndex / capacity).clamp(0.0, 1.0);
@@ -263,6 +286,16 @@ class TubeComponent extends PositionComponent with TapCallbacks {
         _splashRipples.removeAt(i);
       }
     }
+
+    for (var i = _overflowDroplets.length - 1; i >= 0; i--) {
+      final droplet = _overflowDroplets[i];
+      droplet.elapsed += dt;
+      droplet.velocity += Offset(0, 380 * dt);
+      droplet.position += droplet.velocity * dt;
+      if (droplet.elapsed >= droplet.lifetime) {
+        _overflowDroplets.removeAt(i);
+      }
+    }
   }
 
   @override
@@ -331,12 +364,13 @@ class TubeComponent extends PositionComponent with TapCallbacks {
         height: segmentHeight,
         index: i,
         isTopVisible: i == segments.length - 1,
+        segment: segment,
       );
       final path = _buildLiquidSegmentPath(bottomSurface, topSurface);
       final bounds = path.getBounds();
-      final paint = _buildSegmentPaint(bounds, segment.color);
+      final paint = _buildSegmentPaint(bounds, segment);
       canvas.drawPath(path, paint);
-      _renderSegmentHighlights(canvas, path, bounds);
+      _renderSegmentHighlights(canvas, path, bounds, segment);
       previousSurface = topSurface;
     }
     canvas.restore();
@@ -345,6 +379,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     _renderRipple(canvas);
     _renderSparkles(canvas);
     _renderSplashRipples(canvas);
+    _renderOverflowDroplets(canvas);
   }
 
   Path _buildBottlePath() {
@@ -508,21 +543,25 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     required double height,
     required int index,
     required bool isTopVisible,
+    required ColorSegment segment,
   }) {
     final left = Offset(inset, y);
     final right = Offset(size.x - inset, y);
     final width = math.max(right.dx - left.dx, 1.0);
     final minAmplitude = height * 0.18;
     final maxAmplitude = height * 0.78;
-    final baseAmplitude = height * (isTopVisible ? 0.52 : 0.36);
+    final viscosityDamping = lerpDouble(0.58, 1.22, 1 - segment.viscosity)!;
+    final baseAmplitude = height * (isTopVisible ? 0.52 : 0.36) * viscosityDamping;
     final amplitude = math.min(math.max(baseAmplitude, minAmplitude), maxAmplitude);
     final undulation = math.sin(index * 1.24 + _rippleProgress * math.pi * 0.45);
-    final crestShift = (isTopVisible
-            ? (_rippleProgress - 0.5) * 0.6
-            : undulation * 0.35) *
-        width * 0.12;
-    final controlYOffset = amplitude * (0.72 + 0.1 * math.cos(index * 1.6));
-    final secondaryYOffset = amplitude * (0.68 + 0.08 * math.sin(index * 1.1));
+    final crestOffsetBase = isTopVisible
+        ? (_rippleProgress - 0.5) * 0.6
+        : undulation * (0.35 + (0.18 * (1 - segment.viscosity)));
+    final crestShift = crestOffsetBase * width * 0.12;
+    final controlYOffset =
+        amplitude * (0.72 + 0.1 * math.cos(index * 1.6 * segment.refractiveIndex));
+    final secondaryYOffset = amplitude *
+        (0.68 + 0.08 * math.sin(index * 1.1 + (1 - segment.viscosity) * 0.8));
     return _SurfaceSegment(
       left: left,
       right: right,
@@ -555,40 +594,55 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     return paint;
   }
 
-  Paint _buildSegmentPaint(Rect rect, Color color) {
+  Paint _buildSegmentPaint(Rect rect, ColorSegment segment) {
+    final color = segment.color.withOpacity(segment.opacity);
     final top = Color.lerp(color, Colors.white, 0.22)!;
     final bottom = Color.lerp(color, Colors.black, 0.16)!;
+    final shimmerStrength = lerpDouble(0.12, 0.4, 1 - segment.viscosity)!;
+    final shader = LinearGradient(
+      colors: [
+        top,
+        Color.lerp(top, Colors.white, shimmerStrength)!,
+        bottom,
+      ],
+      stops: const [0.0, 0.32, 1.0],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    ).createShader(rect);
     return Paint()
-      ..shader = LinearGradient(
-        colors: [top, bottom],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ).createShader(rect);
+      ..shader = shader
+      ..style = PaintingStyle.fill;
   }
 
-  void _renderSegmentHighlights(Canvas canvas, Path path, Rect bounds) {
-    if (style.design != TubeDesign.neon) {
-      return;
-    }
-    final highlightRect = Rect.fromLTWH(
-      bounds.left + bounds.width * 0.58,
-      bounds.top + bounds.height * 0.1,
-      bounds.width * 0.26,
-      bounds.height * 0.78,
+  void _renderSegmentHighlights(
+    Canvas canvas,
+    Path path,
+    Rect bounds,
+    ColorSegment segment,
+  ) {
+    final highlightOpacity = lerpDouble(0.12, 0.38, 1 - segment.viscosity)!;
+    final innerHighlight = Rect.fromLTWH(
+      bounds.left + bounds.width * 0.54,
+      bounds.top + bounds.height * 0.08,
+      bounds.width * 0.28,
+      bounds.height * 0.82,
     );
     final highlightPaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.55),
+          Colors.white.withOpacity(highlightOpacity),
           Colors.white.withOpacity(0.0),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-      ).createShader(highlightRect);
+      ).createShader(innerHighlight);
     canvas.save();
     canvas.clipPath(path);
     canvas.drawRRect(
-      RRect.fromRectAndRadius(highlightRect, Radius.circular(bounds.width * 0.18)),
+      RRect.fromRectAndRadius(
+        innerHighlight,
+        Radius.circular(bounds.width * lerpDouble(0.12, 0.24, segment.viscosity)!),
+      ),
       highlightPaint,
     );
     canvas.restore();
@@ -819,6 +873,24 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       canvas.drawCircle(center, radius, paint);
     }
   }
+
+  void _renderOverflowDroplets(Canvas canvas) {
+    if (_overflowDroplets.isEmpty) {
+      return;
+    }
+    for (final droplet in _overflowDroplets) {
+      final fade = (1 - droplet.elapsed / droplet.lifetime).clamp(0.0, 1.0);
+      final rect = Rect.fromCircle(center: droplet.position, radius: droplet.radius);
+      final paint = Paint()
+        ..shader = RadialGradient(
+          colors: [
+            droplet.color.withOpacity(0.55 * fade),
+            droplet.color.withOpacity(0.0),
+          ],
+        ).createShader(rect);
+      canvas.drawCircle(droplet.position, droplet.radius, paint);
+    }
+  }
 }
 
 class _SurfaceSegment {
@@ -878,6 +950,23 @@ class _SplashRipple {
 
   final Color color;
   final double baseProgress;
+  final double lifetime;
+  double elapsed = 0;
+}
+
+class _OverflowDroplet {
+  _OverflowDroplet({
+    required this.color,
+    required this.position,
+    required this.velocity,
+    required this.radius,
+    required this.lifetime,
+  });
+
+  final Color color;
+  Offset position;
+  Offset velocity;
+  final double radius;
   final double lifetime;
   double elapsed = 0;
 }
