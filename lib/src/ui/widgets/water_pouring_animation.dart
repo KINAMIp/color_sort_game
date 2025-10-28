@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'dart:ui' show lerpDouble;
+import 'dart:ui' show lerpDouble, PathMetric, Tangent;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -356,6 +356,15 @@ class _WaterPainter extends CustomPainter {
     canvas.translate(pivot.dx, pivot.dy);
     canvas.rotate(angle);
     canvas.translate(-pivot.dx, -pivot.dy);
+  }
+
+  Offset _rotatePoint(Offset point, Offset pivot, double angle) {
+    final double sinAngle = math.sin(angle);
+    final double cosAngle = math.cos(angle);
+    final Offset translated = point - pivot;
+    final double rotatedX = translated.dx * cosAngle - translated.dy * sinAngle;
+    final double rotatedY = translated.dx * sinAngle + translated.dy * cosAngle;
+    return Offset(rotatedX, rotatedY) + pivot;
   }
 
   void _drawGlass(Canvas canvas, RRect outer, RRect inner, {required bool emphasize}) {

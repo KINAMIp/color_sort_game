@@ -150,7 +150,10 @@ class LiquidStreamComponent extends PositionComponent {
         _droplets.add(
           _StreamDroplet(
             position: _end + offset * 0.3,
-            velocity: Offset(offset.dx * 60, -math.max(40, 120 * _flowRate)),
+            velocity: Offset(
+              offset.dx * 60,
+              -math.max(40.0, 120.0 * _flowRate).toDouble(),
+            ),
             color: _color,
             lifetime: lerpDouble(0.4, 0.9, 1 - _viscosity)!,
             radius: lerpDouble(2.6, 4.2, 1 - _viscosity)!,
