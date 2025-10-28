@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../game/crayon_game.dart';
-import '../widgets/animated_gradient_button.dart';
-import '../widgets/animated_gradient_text.dart';
-import '../widgets/glass_card.dart';
+import '../widgets/dark_pattern_background.dart';
+import '../widgets/filled_action_button.dart';
 
 class PauseOverlay extends StatelessWidget {
   const PauseOverlay({
@@ -17,62 +16,80 @@ class PauseOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox.expand(
       child: Stack(
         children: [
-          Positioned.fill(
-            child: Container(
-              color: Colors.black.withOpacity(0.45),
-            ),
+          DarkPatternBackground(
+            child: Container(color: Colors.black.withOpacity(0.6)),
           ),
           Center(
-            child: GlassCard(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 36),
-              borderRadius: 32,
-              color: Colors.white.withOpacity(0.18),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedGradientText(
-                    'Paused',
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFF7BAC), Color(0xFF9C6BFF)],
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 360),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 32),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF18192B).withOpacity(0.94),
+                  borderRadius: BorderRadius.circular(32),
+                  border: Border.all(color: Colors.white.withOpacity(0.08)),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x6617182A),
+                      blurRadius: 24,
+                      offset: Offset(0, 14),
                     ),
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w800,
-                        ),
-                  ),
-                  const SizedBox(height: 24),
-                  AnimatedGradientButton(
-                    text: 'Resume',
-                    colors: const [Color(0xFF7CF6F3), Color(0xFF7288FF)],
-                    onPressed: () {
-                      game.resumeGame();
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  AnimatedGradientButton(
-                    text: 'Restart Level',
-                    colors: const [Color(0xFFFFCA7A), Color(0xFFFF7BAC)],
-                    onPressed: () {
-                      game.resetLevel();
-                      game.resumeGame();
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: onExit,
-                    child: const Text(
-                      'Exit to Menu',
-                      style: TextStyle(
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Paused',
+                      style: theme.textTheme.headlineSmall?.copyWith(
                         color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1.8,
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 12),
+                    Text(
+                      'Take a quick breather before diving back into the puzzle.',
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.white.withOpacity(0.72),
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 28),
+                    FilledActionButton(
+                      label: 'Resume',
+                      colors: const [Color(0xFF68F5B4), Color(0xFF46DCD5)],
+                      onPressed: () {
+                        game.resumeGame();
+                      },
+                    ),
+                    const SizedBox(height: 14),
+                    FilledActionButton(
+                      label: 'Restart',
+                      colors: const [Color(0xFF586DFF), Color(0xFF8B55FF)],
+                      onPressed: () {
+                        game.resetLevel();
+                        game.resumeGame();
+                      },
+                    ),
+                    const SizedBox(height: 14),
+                    TextButton(
+                      onPressed: onExit,
+                      child: const Text(
+                        'Exit to menu',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

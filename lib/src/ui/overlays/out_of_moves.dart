@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../game/crayon_game.dart';
-import '../widgets/animated_gradient_button.dart';
-import '../widgets/animated_gradient_text.dart';
-import '../widgets/glass_card.dart';
+import '../widgets/dark_pattern_background.dart';
+import '../widgets/filled_action_button.dart';
 
 class OutOfMovesOverlay extends StatefulWidget {
   const OutOfMovesOverlay({
@@ -31,69 +29,67 @@ class _OutOfMovesOverlayState extends State<OutOfMovesOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox.expand(
       child: Stack(
         children: [
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFF020621), Color(0xFF071539)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+          DarkPatternBackground(
+            child: Container(color: Colors.black.withOpacity(0.6)),
+          ),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 380),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 36),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1A1B30).withOpacity(0.95),
+                  borderRadius: BorderRadius.circular(32),
+                  border: Border.all(color: Colors.white.withOpacity(0.08)),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x6617182A),
+                      blurRadius: 26,
+                      offset: Offset(0, 16),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Out of moves',
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.6,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      "You've used every move available. Try reshuffling your strategy and go again!",
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.white.withOpacity(0.74),
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    FilledActionButton(
+                      label: 'Try again',
+                      colors: const [Color(0xFF68F5B4), Color(0xFF46DCD5)],
+                      onPressed: widget.onRetry,
+                    ),
+                    const SizedBox(height: 16),
+                    FilledActionButton(
+                      label: 'Exit to menu',
+                      colors: const [Color(0xFFFF6F91), Color(0xFFFF9671)],
+                      onPressed: widget.onExit,
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-          Center(
-            child: GlassCard(
-              borderRadius: 32,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
-              color: Colors.white.withOpacity(0.16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedGradientText(
-                    'Out of moves',
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFF7BAC), Color(0xFF9C6BFF), Color(0xFF7CF6F3)],
-                    ),
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 36,
-                        ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'You have used every move available. Try the level again or exit to the menu.',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Colors.white.withOpacity(0.85),
-                          height: 1.4,
-                        ),
-                  ).animate().fadeIn(duration: const Duration(milliseconds: 360)),
-                  const SizedBox(height: 26),
-                  AnimatedGradientButton(
-                    text: 'Restart the level',
-                    colors: const [Color(0xFF7CF6F3), Color(0xFF7288FF)],
-                    icon: Icons.restart_alt_rounded,
-                    onPressed: () {
-                      widget.onRetry();
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  AnimatedGradientButton(
-                    text: 'Exit the game',
-                    colors: const [Color(0xFFFF9A9E), Color(0xFFFF7BAC)],
-                    icon: Icons.exit_to_app_rounded,
-                    onPressed: widget.onExit,
-                  ),
-                ],
-              ),
-            )
-                .animate()
-                .scale(begin: const Offset(0.8, 0.8), end: const Offset(1.0, 1.0), curve: Curves.easeOutBack)
-                .fadeIn(duration: const Duration(milliseconds: 280)),
           ),
         ],
       ),
