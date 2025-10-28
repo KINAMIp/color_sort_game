@@ -1,4 +1,6 @@
-import 'dart:ui';
+import 'dart:ui' show Color;
+
+import 'package:flutter/painting.dart' show HSLColor;
 
 /// Describes a single segment of liquid inside a tube.
 ///
