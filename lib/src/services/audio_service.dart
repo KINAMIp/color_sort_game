@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame_audio/flame_audio.dart';
 
@@ -56,11 +59,34 @@ class AudioService {
     }
   }
 
-  void playPour() {
+  Future<void> playPourDynamic({
+    double intensity = 0.6,
+    double viscosity = 0.5,
+  }) async {
     if (_muted || !_initialized) {
       return;
     }
-    FlameAudio.play(AssetPaths.audioPour, volume: 0.6);
+    final clampedIntensity = intensity.clamp(0.0, 1.0);
+    final clampedViscosity = viscosity.clamp(0.1, 1.0);
+    final baseVolume = lerpDouble(0.32, 0.82, clampedIntensity)!;
+    final viscosityAttenuation = lerpDouble(1.1, 0.7, clampedViscosity)!;
+    final volume = (baseVolume * viscosityAttenuation).clamp(0.2, 1.0);
+    final playbackRate = lerpDouble(1.18, 0.74, clampedViscosity)!;
+    try {
+      final player = await FlameAudio.play(AssetPaths.audioPour, volume: volume);
+      await player.setPlaybackRate(playbackRate);
+    } catch (_) {
+      // Fall back to the default behaviour if the audio backend does not
+      // support playback rate changes on the current platform.
+      await FlameAudio.play(AssetPaths.audioPour, volume: volume);
+    }
+  }
+
+  void playPour({
+    double intensity = 0.6,
+    double viscosity = 0.5,
+  }) {
+    unawaited(playPourDynamic(intensity: intensity, viscosity: viscosity));
   }
 
   void playInvalid() {
