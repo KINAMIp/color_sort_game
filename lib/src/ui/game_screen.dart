@@ -10,7 +10,7 @@ import '../ui/overlays/hud_overlay.dart';
 import '../ui/overlays/level_complete.dart';
 import '../ui/overlays/out_of_moves.dart';
 import '../ui/overlays/pause_overlay.dart';
-import 'widgets/animated_background.dart';
+import 'widgets/dark_pattern_background.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key, required this.level});
@@ -59,18 +59,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     context.read<AppState>().audioService.enableAmbientLoop();
     return Scaffold(
-      body: AnimatedBackground(
-        colors: const [
-          Color(0xFF203A92),
-          Color(0xFF4169D9),
-          Color(0xFF77C8FF),
-          Color(0xFFA5E4FF),
-        ],
-        beginAlignment: Alignment.topLeft,
-        endAlignment: Alignment.bottomRight,
-        opacity: 0.22,
-        darkOverlay: true,
-        showWaterBalloons: true,
+      body: DarkPatternBackground(
         child: Stack(
           children: [
             GameWidget(
@@ -106,44 +95,6 @@ class _GameScreenState extends State<GameScreen> {
                   );
                 },
               },
-            ),
-            Positioned(
-              top: 32,
-              left: 18,
-              child: GestureDetector(
-                onTap: _handleExitRequest,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF9AE7FF), Color(0xFF7288FF)],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        blurRadius: 14,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_back_rounded, color: Colors.white),
-                        SizedBox(width: 6),
-                        Text(
-                          'Menu',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

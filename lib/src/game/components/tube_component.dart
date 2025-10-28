@@ -315,7 +315,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     final fillPaint = _buildFillPaint();
 
     canvas.drawPath(shapePath, fillPaint);
-    _renderNeonGlassHighlights(canvas, shapePath);
+    _renderGlassHighlights(canvas, shapePath);
     if (isSolved) {
       canvas.save();
       canvas.clipPath(shapePath);
@@ -335,7 +335,7 @@ class TubeComponent extends PositionComponent with TapCallbacks {
       canvas.restore();
     }
     canvas.drawPath(shapePath, borderPaint);
-    _renderNeonRim(canvas);
+    _renderGlassRim(canvas);
 
     if (segments.isEmpty) {
       _renderRipple(canvas);
@@ -383,111 +383,46 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   }
 
   Path _buildBottlePath() {
-    final rect = Rect.fromLTWH(0, 0, size.x, size.y);
     switch (style.design) {
-      case TubeDesign.classic:
-        return Path()
-          ..addRRect(RRect.fromRectAndRadius(rect, const Radius.circular(24)));
-      case TubeDesign.slender:
-        return _buildCurvedBottlePath(
-          neckWidthFactor: 0.42,
-          shoulderWidthFactor: 0.7,
-          bellyWidthFactor: 0.82,
-          neckHeightFactor: 0.18,
-          shoulderHeightFactor: 0.58,
-          baseCurveFactor: 0.08,
-        );
-      case TubeDesign.potion:
-        return _buildCurvedBottlePath(
-          neckWidthFactor: 0.32,
-          shoulderWidthFactor: 0.78,
-          bellyWidthFactor: 0.92,
-          neckHeightFactor: 0.2,
-          shoulderHeightFactor: 0.48,
-          baseCurveFactor: 0.05,
-        );
-      case TubeDesign.royal:
-        return _buildCurvedBottlePath(
-          neckWidthFactor: 0.5,
-          shoulderWidthFactor: 0.9,
-          bellyWidthFactor: 0.88,
-          neckHeightFactor: 0.16,
-          shoulderHeightFactor: 0.44,
-          baseCurveFactor: 0.07,
-        );
-      case TubeDesign.neon:
-        return _buildNeonBottlePath();
+      case TubeDesign.cylindrical:
+        return _buildCylindricalBottlePath();
     }
   }
 
-  Path _buildCurvedBottlePath({
-    required double neckWidthFactor,
-    required double shoulderWidthFactor,
-    required double bellyWidthFactor,
-    required double neckHeightFactor,
-    required double shoulderHeightFactor,
-    required double baseCurveFactor,
-  }) {
+  Path _buildCylindricalBottlePath() {
     final w = size.x;
     final h = size.y;
-    final neckWidth = w * neckWidthFactor;
-    final shoulderWidth = w * shoulderWidthFactor;
-    final bellyWidth = w * bellyWidthFactor;
-    final neckHeight = h * neckHeightFactor;
-    final shoulderHeight = h * shoulderHeightFactor;
-    final baseCurveHeight = h * baseCurveFactor;
-
+    final rimHeight = w * 0.26;
     final path = Path();
-    path.moveTo((w - neckWidth) / 2, 0);
-    path.lineTo((w + neckWidth) / 2, 0);
-    path.cubicTo(
-      (w + neckWidth) / 2,
-      neckHeight * 0.4,
-      (w + shoulderWidth) / 2,
-      neckHeight + (shoulderHeight - neckHeight) * 0.35,
-      (w + shoulderWidth) / 2,
-      shoulderHeight,
-    );
-    path.cubicTo(
-      (w + bellyWidth) / 2,
-      h - baseCurveHeight,
-      w * 0.5 + bellyWidth * 0.1,
-      h,
-      w * 0.5,
-      h,
-    );
-    path.cubicTo(
-      w * 0.5 - bellyWidth * 0.1,
-      h,
-      (w - bellyWidth) / 2,
-      h - baseCurveHeight,
-      (w - shoulderWidth) / 2,
-      shoulderHeight,
-    );
-    path.cubicTo(
-      (w - shoulderWidth) / 2,
-      neckHeight + (shoulderHeight - neckHeight) * 0.35,
-      (w - neckWidth) / 2,
-      neckHeight * 0.4,
-      (w - neckWidth) / 2,
-      0,
-    );
+
+    final topRect = Rect.fromLTWH(0, 0, w, rimHeight);
+    final bottomRect = Rect.fromLTWH(0, h - rimHeight, w, rimHeight);
+
+    path.moveTo(0, rimHeight / 2);
+    path.arcTo(topRect, math.pi, -math.pi, false);
+    path.lineTo(w, h - rimHeight / 2);
+    path.arcTo(bottomRect, 0, -math.pi, false);
+    path.lineTo(0, rimHeight / 2);
     path.close();
+
     return path;
   }
 
   double _horizontalInsetForProgress(double progress) {
     switch (style.design) {
-      case TubeDesign.classic:
-        return size.x * 0.12;
-      case TubeDesign.slender:
-        return size.x * (0.1 + 0.12 * progress);
-      case TubeDesign.potion:
-        return size.x * (0.18 - 0.08 * math.sin(progress * math.pi));
-      case TubeDesign.royal:
-        return size.x * (0.14 + 0.06 * math.cos(progress * math.pi));
-      case TubeDesign.neon:
-        return size.x * 0.16;
+      case TubeDesign.cylindrical:
+        const rimRange = 0.14;
+        final bodyInset = size.x * 0.14;
+        final rimInset = size.x * 0.22;
+        if (progress <= rimRange) {
+          final t = (progress / rimRange).clamp(0.0, 1.0);
+          return lerpDouble(rimInset, bodyInset, t)!;
+        }
+        if (progress >= 1 - rimRange) {
+          final t = ((progress - (1 - rimRange)) / rimRange).clamp(0.0, 1.0);
+          return lerpDouble(bodyInset, rimInset, t)!;
+        }
+        return bodyInset;
     }
   }
 
@@ -577,21 +512,18 @@ class TubeComponent extends PositionComponent with TapCallbacks {
   }
 
   Paint _buildFillPaint() {
-    final paint = Paint()..style = PaintingStyle.fill;
-    if (style.design == TubeDesign.neon) {
-      final bounds = Rect.fromLTWH(0, 0, size.x, size.y);
-      paint.shader = LinearGradient(
+    final bounds = Rect.fromLTWH(0, 0, size.x, size.y);
+    return Paint()
+      ..style = PaintingStyle.fill
+      ..shader = LinearGradient(
         colors: [
-          style.innerColor.withOpacity(0.94),
-          Color.lerp(style.innerColor, Colors.black, 0.3)!,
+          style.innerColor.withOpacity(0.6),
+          style.innerColor.withOpacity(0.18),
         ],
+        stops: const [0.0, 1.0],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(bounds);
-    } else {
-      paint.color = style.innerColor;
-    }
-    return paint;
   }
 
   Paint _buildSegmentPaint(Rect rect, ColorSegment segment) {
@@ -648,133 +580,103 @@ class TubeComponent extends PositionComponent with TapCallbacks {
     canvas.restore();
   }
 
-  void _renderNeonGlassHighlights(Canvas canvas, Path shapePath) {
-    if (style.design != TubeDesign.neon) {
-      return;
-    }
+  void _renderGlassHighlights(Canvas canvas, Path shapePath) {
     canvas.save();
     canvas.clipPath(shapePath);
-    final innerHighlight = Rect.fromLTWH(
-      size.x * 0.12,
-      size.y * 0.08,
-      size.x * 0.28,
-      size.y * 0.62,
+
+    final primaryHighlight = Rect.fromLTWH(
+      size.x * 0.18,
+      size.y * 0.12,
+      size.x * 0.2,
+      size.y * 0.68,
     );
-    final innerPaint = Paint()
+    final primaryPaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.36),
-          Colors.white.withOpacity(0.02),
+          Colors.white.withOpacity(0.32),
+          Colors.white.withOpacity(0.0),
         ],
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-      ).createShader(innerHighlight);
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(primaryHighlight);
     canvas.drawRRect(
-      RRect.fromRectAndRadius(innerHighlight, Radius.circular(size.x * 0.18)),
-      innerPaint,
+      RRect.fromRectAndRadius(primaryHighlight, Radius.circular(size.x * 0.26)),
+      primaryPaint,
     );
 
-    final sideGlow = Rect.fromLTWH(
+    final sideHighlight = Rect.fromLTWH(
       size.x * 0.62,
-      size.y * 0.12,
-      size.x * 0.18,
-      size.y * 0.72,
+      size.y * 0.18,
+      size.x * 0.14,
+      size.y * 0.58,
     );
     final sidePaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.42),
+          Colors.white.withOpacity(0.18),
           Colors.white.withOpacity(0.0),
         ],
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-      ).createShader(sideGlow);
+      ).createShader(sideHighlight);
     canvas.drawRRect(
-      RRect.fromRectAndRadius(sideGlow, Radius.circular(size.x * 0.22)),
+      RRect.fromRectAndRadius(sideHighlight, Radius.circular(size.x * 0.22)),
       sidePaint,
     );
-    canvas.restore();
 
     final baseGlowRect = Rect.fromLTWH(
       size.x * 0.18,
-      size.y - _bottomPadding - size.x * 0.26,
+      size.y - _bottomPadding - size.x * 0.28,
       size.x * 0.64,
-      size.x * 0.3,
+      size.x * 0.34,
     );
     final basePaint = Paint()
       ..shader = RadialGradient(
         colors: [
-          style.selectionColor.withOpacity(0.32),
+          style.selectionColor.withOpacity(0.28),
           Colors.transparent,
         ],
       ).createShader(baseGlowRect);
     canvas.drawOval(baseGlowRect, basePaint);
+
+    canvas.restore();
   }
 
-  void _renderNeonRim(Canvas canvas) {
-    if (style.design != TubeDesign.neon) {
-      return;
-    }
+  void _renderGlassRim(Canvas canvas) {
+    final rimHeight = size.x * 0.24;
     final rimRect = Rect.fromLTWH(
-      size.x * 0.08,
-      -_strokeWidth * 0.4,
-      size.x * 0.84,
-      _strokeWidth * 2.2,
+      size.x * 0.04,
+      -_strokeWidth * 0.5,
+      size.x * 0.92,
+      rimHeight,
     );
     final rimPaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.85),
-          style.borderColor.withOpacity(0.9),
-          Colors.white.withOpacity(0.75),
+          Colors.white.withOpacity(0.9),
+          style.borderColor.withOpacity(0.55),
         ],
-        stops: const [0.0, 0.48, 1.0],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(rimRect);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rimRect, Radius.circular(size.x * 0.22)),
-      rimPaint,
-    );
-  }
+    canvas.drawOval(rimRect, rimPaint);
 
-  Path _buildNeonBottlePath() {
-    final w = size.x;
-    final h = size.y;
-    final neckWidth = w * 0.68;
-    final shoulderWidth = w * 0.9;
-    final bellyWidth = w * 0.94;
-    final neckHeight = h * 0.12;
-    final shoulderHeight = h * 0.42;
-    final baseCurveHeight = h * 0.12;
-
-    final path = Path();
-    path.moveTo((w - neckWidth) / 2, 0);
-    path.lineTo((w + neckWidth) / 2, 0);
-    path.cubicTo(
-      (w + shoulderWidth) / 2,
-      neckHeight * 0.6,
-      (w + bellyWidth) / 2,
-      shoulderHeight,
-      (w + bellyWidth * 0.82) / 2,
-      h - baseCurveHeight,
+    final innerRect = Rect.fromLTWH(
+      size.x * 0.1,
+      rimHeight * 0.22,
+      size.x * 0.8,
+      rimHeight * 0.42,
     );
-    path.quadraticBezierTo(
-      w * 0.5,
-      h,
-      (w - bellyWidth * 0.82) / 2,
-      h - baseCurveHeight,
-    );
-    path.cubicTo(
-      (w - bellyWidth) / 2,
-      shoulderHeight,
-      (w - shoulderWidth) / 2,
-      neckHeight * 0.6,
-      (w - neckWidth) / 2,
-      0,
-    );
-    path.close();
-    return path;
+    final innerPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [
+          Colors.white.withOpacity(0.38),
+          Colors.white.withOpacity(0.0),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(innerRect);
+    canvas.drawOval(innerRect, innerPaint);
   }
 
   void _renderRipple(Canvas canvas) {
